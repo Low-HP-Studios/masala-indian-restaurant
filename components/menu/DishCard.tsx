@@ -1,9 +1,12 @@
-import type { MenuItem, ProteinPrices, SpiceLevel } from "@/data/menu";
+import Image from "next/image";
+import type { MenuItem, ProteinPrices, SectionVariant, SpiceLevel } from "@/data/menu";
 import { formatPrice } from "@/data/menu";
 import SpiceIndicator from "./SpiceIndicator";
+import VegMark from "./VegMark";
 
 type Props = {
   item: MenuItem;
+  variant?: SectionVariant;
   labels: {
     chefSpecial: string;
     proteins: Record<string, string>;
@@ -11,64 +14,87 @@ type Props = {
   };
 };
 
-export default function DishCard({ item, labels }: Props) {
+export default function DishRow({ item, variant = "default", labels }: Props) {
   const isProteinBased = typeof item.price === "object";
+  const isChef = variant === "chef";
+
+  const nameClass = `font-heading text-lg sm:text-xl font-semibold leading-tight ${
+    isChef ? "text-cream chef-dot" : "text-ink"
+  }`;
+  const priceClass = `font-heading text-lg sm:text-xl font-semibold whitespace-nowrap ${
+    isChef ? "text-gold-light" : "text-saffron-dark"
+  }`;
+  const descClass = `font-body text-sm leading-snug italic ${
+    isChef ? "text-cream/70" : "text-ink-muted"
+  }`;
+  const noteClass = `font-body text-xs ${isChef ? "text-cream/55" : "text-ink-muted/70"}`;
+  const proteinRowClass = `flex items-baseline gap-2 ${
+    isChef ? "text-cream/85" : "text-ink/85"
+  }`;
 
   return (
-    <div className="bg-surface border border-line hover:border-gold/40 transition-all duration-300 group p-5 flex flex-col gap-3">
-      {/* Header row */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-0.5">
-            <h3 className="font-heading text-xl text-ink font-semibold leading-tight">{item.name}</h3>
-            {item.isVegetarian && (
-              <span className="flex-shrink-0 w-4 h-4 border border-green-600 flex items-center justify-center rounded-sm">
-                <span className="w-2 h-2 rounded-full bg-green-600 block" />
-              </span>
-            )}
-            {item.isChefSpecial && (
-              <span className="text-saffron text-xs font-semibold font-body bg-saffron/10 px-2 py-0.5">
-                {labels.chefSpecial}
-              </span>
-            )}
-          </div>
-          {item.description && (
-            <p className="text-ink-muted text-sm font-body leading-snug italic">{item.description}</p>
-          )}
-          {item.note && (
-            <p className="text-ink-muted/70 text-xs font-body mt-0.5">{item.note}</p>
-          )}
-        </div>
-
-        {/* Single price */}
-        {!isProteinBased && (
-          <div className="flex-shrink-0 text-right">
-            <span className="font-heading text-xl text-saffron font-semibold">{formatPrice(item.price)}</span>
+    <article className="py-4 first:pt-0 last:pb-0">
+      <div className="flex gap-4">
+        {item.image && (
+          <div className="relative flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-sm border border-line shadow-sm">
+            <Image
+              src={item.image}
+              alt={item.name}
+              fill
+              sizes="80px"
+              className="object-cover"
+              loading="lazy"
+            />
           </div>
         )}
-      </div>
 
-      {/* Protein-based pricing grid */}
-      {isProteinBased && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1.5">
-          {Object.entries(item.price as ProteinPrices).map(([protein, price]) => (
-            <div
-              key={protein}
-              className="flex flex-col items-center bg-surface-soft/70 px-2 py-1.5 text-center hover:bg-saffron/10 transition-colors cursor-default"
-            >
-              <span className="text-ink-muted text-xs font-body font-semibold">{labels.proteins[protein] ?? protein}</span>
-              <span className="font-heading text-base text-ink font-semibold">€{(price as number).toFixed(2)}</span>
+        <div className="flex-1 min-w-0">
+          <div className="menu-leader">
+            <span className="flex items-center gap-2 flex-wrap">
+              <VegMark vegetarian={!!item.isVegetarian} />
+              <h3 className={nameClass}>{item.name}</h3>
+              {item.spiceLevel !== undefined && item.spiceLevel > 0 && (
+                <SpiceIndicator level={item.spiceLevel} labels={labels.spice} />
+              )}
+              {item.isChefSpecial && !isChef && (
+                <span className="text-[0.65rem] font-semibold font-body uppercase tracking-wider text-saffron-dark bg-saffron/10 border border-saffron/30 px-1.5 py-0.5">
+                  {labels.chefSpecial}
+                </span>
+              )}
+            </span>
+            <span className="menu-leader__dots" />
+            {!isProteinBased && (
+              <span className={priceClass}>{formatPrice(item.price)}</span>
+            )}
+            {isProteinBased && (
+              <span className={`${priceClass} text-sm sm:text-base opacity-80`}>
+                {formatPrice(item.price)}
+              </span>
+            )}
+          </div>
+
+          {item.description && <p className={`${descClass} mt-1`}>{item.description}</p>}
+          {item.note && <p className={`${noteClass} mt-0.5`}>{item.note}</p>}
+
+          {isProteinBased && (
+            <div className="mt-2 ml-2 sm:ml-4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
+              {Object.entries(item.price as ProteinPrices).map(([protein, price]) => (
+                <div key={protein} className={proteinRowClass}>
+                  <span className="text-sm font-body">
+                    {labels.proteins[protein] ?? protein}
+                  </span>
+                  <span className="flex-1 border-b border-dotted border-line/80 translate-y-[-0.25rem]" />
+                  <span className={`text-sm font-heading font-semibold ${
+                    isChef ? "text-gold-light" : "text-saffron-dark"
+                  }`}>
+                    €{(price as number).toFixed(2)}
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
-      )}
-
-      {/* Footer row */}
-      {item.spiceLevel !== undefined && item.spiceLevel > 0 && (
-        <div className="pt-1 border-t border-line">
-          <SpiceIndicator level={item.spiceLevel} showLabel labels={labels.spice} />
-        </div>
-      )}
-    </div>
+      </div>
+    </article>
   );
 }

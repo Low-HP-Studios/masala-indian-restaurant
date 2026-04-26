@@ -122,6 +122,7 @@ export type SiteDictionary = {
     visit: string;
     address: string;
     phone: string;
+    email: string;
     hours: string;
     rights: string;
     crafted: string;
@@ -263,7 +264,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
         },
         {
           title: "Warm Hospitality",
-          text: "Call to reserve or visit us at Calle San Antonio Zen, 7.",
+          text: "Call to reserve or visit us at Av. Mediterráneo 33, Local 1B, Guardamar del Segura.",
         },
       ],
     },
@@ -274,7 +275,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       body:
         "Gather your friends and family for Indian starters, tandoori dishes, curries, biryanis, desserts and drinks.",
       hours: "Call to reserve",
-      addressLine: "Calle San Antonio Zen, 7 - Walk-ins welcome",
+      addressLine: "Av. Mediterráneo 33, Guardamar del Segura - Walk-ins welcome",
     },
     footer: {
       summary: "Indian starters, tandoori dishes, curries, biryanis, vegetarian plates, desserts and drinks.",
@@ -283,6 +284,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       visit: "Visit Us",
       address: "Address",
       phone: "Phone",
+      email: "Email",
       hours: "Reservations",
       rights: "All rights reserved.",
       crafted: "Crafted with love for Indian cuisine",
@@ -394,7 +396,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       items: [
         { title: "Indiase favorieten", text: "Het menu bevat vertrouwde Indiase gerechten, van tandoori tot curry's en biryani." },
         { title: "Volledig menu", text: "Vegetarische gerechten, brood, rijst, desserts en drankjes staan duidelijk op de menukaarten." },
-        { title: "Reserveer direct", text: "Bel om te reserveren of bezoek ons aan Calle San Antonio Zen, 7." },
+        { title: "Reserveer direct", text: "Bel om te reserveren of bezoek ons aan Av. Mediterráneo 33, Local 1B, Guardamar del Segura." },
       ],
     },
     cta: {
@@ -403,7 +405,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       accent: "India te Ervaren?",
       body: "Verzamel vrienden en familie voor Indiase voorgerechten, tandoori, curry's, biryani, desserts en drankjes.",
       hours: "Bel om te reserveren",
-      addressLine: "Calle San Antonio Zen, 7 - Binnenlopen welkom",
+      addressLine: "Av. Mediterráneo 33, Guardamar del Segura - Binnenlopen welkom",
     },
     footer: {
       summary: "Indiase voorgerechten, tandoori, curry's, biryani, vegetarische gerechten, desserts en drankjes.",
@@ -412,6 +414,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       visit: "Bezoek Ons",
       address: "Adres",
       phone: "Telefoon",
+      email: "E-mail",
       hours: "Reserveringen",
       rights: "Alle rechten voorbehouden.",
       crafted: "Gemaakt met liefde voor de Indiase keuken",
@@ -494,7 +497,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       items: [
         { title: "Favoritos indios", text: "La carta incluye platos indios conocidos, desde tandoori hasta curries y biryani." },
         { title: "Carta completa", text: "Platos vegetarianos, panes, arroz, postres y bebidas aparecen claramente en las cartas de la casa." },
-        { title: "Reserva directa", text: "Llama para reservar o visitanos en Calle San Antonio Zen, 7." },
+        { title: "Reserva directa", text: "Llama para reservar o visitanos en Av. Mediterráneo 33, Local 1B, Guardamar del Segura." },
       ],
     },
     cta: {
@@ -503,7 +506,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       accent: "India Esta Noche?",
       body: "Reune a tus amigos y familia para entrantes indios, tandoori, curries, biryani, postres y bebidas.",
       hours: "Llama para reservar",
-      addressLine: "Calle San Antonio Zen, 7 - Sin reserva tambien bienvenidos",
+      addressLine: "Av. Mediterráneo 33, Guardamar del Segura - Sin reserva tambien bienvenidos",
     },
     footer: {
       summary: "Entrantes indios, tandoori, curries, biryani, platos vegetarianos, postres y bebidas.",
@@ -512,6 +515,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       visit: "Visitanos",
       address: "Direccion",
       phone: "Telefono",
+      email: "Correo",
       hours: "Reservas",
       rights: "Todos los derechos reservados.",
       crafted: "Hecho con amor por la cocina india",
@@ -594,7 +598,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       items: [
         { title: "Favoris indiens", text: "La carte comprend des plats indiens familiers, du tandoori aux currys et biryanis." },
         { title: "Carte complete", text: "Plats vegetariens, pains, riz, desserts et boissons sont clairement listes dans les menus maison." },
-        { title: "Reservation directe", text: "Appelez pour reserver ou venez nous voir a Calle San Antonio Zen, 7." },
+        { title: "Reservation directe", text: "Appelez pour reserver ou venez nous voir a Av. Mediterráneo 33, Local 1B, Guardamar del Segura." },
       ],
     },
     cta: {
@@ -603,7 +607,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       accent: "l'Inde ce soir?",
       body: "Reunissez vos proches pour des entrees indiennes, tandoori, currys, biryanis, desserts et boissons.",
       hours: "Appelez pour reserver",
-      addressLine: "Calle San Antonio Zen, 7 - Sans reservation bienvenus",
+      addressLine: "Av. Mediterráneo 33, Guardamar del Segura - Sans reservation bienvenus",
     },
     footer: {
       summary: "Entrees indiennes, tandoori, currys, biryanis, plats vegetariens, desserts et boissons.",
@@ -612,6 +616,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       visit: "Nous Trouver",
       address: "Adresse",
       phone: "Telephone",
+      email: "E-mail",
       hours: "Reservations",
       rights: "Tous droits reserves.",
       crafted: "Prepare avec amour pour la cuisine indienne",

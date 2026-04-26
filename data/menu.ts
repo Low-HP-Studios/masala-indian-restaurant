@@ -22,10 +22,14 @@ export type MenuItem = {
   note?: string;
 };
 
+export type SectionVariant = "default" | "special" | "chef" | "tandoori" | "biryani";
+
 export type MenuCategory = {
   id: string;
   label: string;
   description?: string;
+  bannerImage?: string;
+  variant?: SectionVariant;
   items: MenuItem[];
 };
 
@@ -34,6 +38,8 @@ export const menuCategories: MenuCategory[] = [
     id: "special-menu",
     label: "Special Menu",
     description: "Starter, main course, rice or naan, plus a glass of wine, small beer or soft drink",
+    bannerImage: "/images/menu-image/butter-chicken.png",
+    variant: "special",
     items: [
       {
         id: "special-menu-per-person",
@@ -49,19 +55,20 @@ export const menuCategories: MenuCategory[] = [
     id: "starters",
     label: "Starters",
     description: "Appetisers, starters, puri starters and soups from the house menu",
+    bannerImage: "/images/menu-image/pakora-group.png",
     items: [
       { id: "pappadum", name: "Pappadum", description: "Deep fried poppadum", price: 1.00, spiceLevel: 0, isVegetarian: true },
       { id: "mix-chutney", name: "Mix Chutney & Dips", description: "Mango, mint and onion dips", price: 2.00, spiceLevel: 0, isVegetarian: true },
-      { id: "onion-bhaji", name: "Onion Bhaji", description: "Onion pieces marinated, battered with flour and fried", price: 4.75, spiceLevel: 2, isVegetarian: true, note: "2 pieces" },
-      { id: "veg-samosa", name: "Vegetable Samosa", description: "Deep-fried pastry filled with potato, turmeric and green peas", price: 4.75, spiceLevel: 1, isVegetarian: true, note: "2 pieces" },
+      { id: "onion-bhaji", name: "Onion Bhaji", description: "Onion pieces marinated, battered with flour and fried", price: 4.75, spiceLevel: 2, isVegetarian: true, note: "2 pieces", image: "/images/food/4.jpeg" },
+      { id: "veg-samosa", name: "Vegetable Samosa", description: "Deep-fried pastry filled with potato, turmeric and green peas", price: 4.75, spiceLevel: 1, isVegetarian: true, note: "2 pieces", image: "/images/food/11.jpg" },
       { id: "meat-samosa", name: "Meat Samosa", description: "Deep-fried pastry filled with spiced meat", price: 5.50, spiceLevel: 2, note: "2 pieces" },
       { id: "veg-pakora", name: "Vegetable Pakora", description: "Vegetable pieces coated with gram flour and fried", price: 4.75, spiceLevel: 1, isVegetarian: true },
-      { id: "chicken-pakora", name: "Chicken Pakora", description: "Chicken pieces deep fried in gram flour batter", price: 5.50, spiceLevel: 2 },
+      { id: "chicken-pakora", name: "Chicken Pakora", description: "Chicken pieces deep fried in gram flour batter", price: 5.50, spiceLevel: 2, image: "/images/food/3.jpeg" },
       { id: "paneer-pakora", name: "Paneer Pakora", description: "Soft paneer coated with savoury gram flour batter and fried", price: 5.50, spiceLevel: 1, isVegetarian: true },
       { id: "gobi-pakora", name: "Gobi Pakora", description: "Cauliflower florets dipped in gram flour batter and fried", price: 4.95, spiceLevel: 1, isVegetarian: true },
       { id: "fish-pakora", name: "Fish Pakora", description: "Fish marinated in lemon, coated in spiced gram flour batter and deep-fried", price: 7.50, spiceLevel: 2 },
       { id: "mix-pakora", name: "Mix Pakora Platter", description: "Mix of chicken, vegetable and pakora served together", price: 6.95, spiceLevel: 2 },
-      { id: "chicken-chaat", name: "Chicken Chaat", description: "Chicken pieces cooked with onions, tomatoes, chaat masala and lemon juice", price: 5.50, spiceLevel: 2 },
+      { id: "chicken-chaat", name: "Chicken Chaat", description: "Chicken pieces cooked with onions, tomatoes, chaat masala and lemon juice", price: 5.50, spiceLevel: 2, image: "/images/food/5.jpg" },
       { id: "chana-chaat", name: "Chana Chaat", description: "Chickpeas with tamarind chutney, green chutney, onions and tomatoes", price: 5.00, spiceLevel: 1, isVegetarian: true },
       { id: "prawn-puri", name: "Prawn Puri", description: "Shelled prawns sauteed in tangy marinade and placed inside soft puri bread", price: 6.00, spiceLevel: 2 },
       { id: "chicken-puri", name: "Chicken Puri", description: "Chicken pieces sauteed in tangy marinade and placed inside soft puri bread", price: 5.50, spiceLevel: 2 },
@@ -75,10 +82,12 @@ export const menuCategories: MenuCategory[] = [
     id: "tandoori",
     label: "Tandoori Starters",
     description: "Marinated and cooked in the clay oven",
+    bannerImage: "/images/menu-image/tandoori-chicken.png",
+    variant: "tandoori",
     items: [
       { id: "tandoori-chicken-tikka-s", name: "Chicken Tikka", description: "Tender chicken breast pieces cooked in the tandoor", price: 5.75, spiceLevel: 2 },
-      { id: "tandoori-chicken-s", name: "Tandoori Chicken", description: "Chicken marinated and smoke-roasted in the tandoor", price: 5.75, spiceLevel: 2 },
-      { id: "chicken-wings", name: "Chicken Wings", description: "Chicken wings marinated with yoghurt and cooked in the clay oven", price: 5.75, spiceLevel: 2 },
+      { id: "tandoori-chicken-s", name: "Tandoori Chicken", description: "Chicken marinated and smoke-roasted in the tandoor", price: 5.75, spiceLevel: 2, image: "/images/food/6.jpg" },
+      { id: "chicken-wings", name: "Chicken Wings", description: "Chicken wings marinated with yoghurt and cooked in the clay oven", price: 5.75, spiceLevel: 2, image: "/images/food/14.jpg" },
       { id: "seekh-kebab-s", name: "Seekh Kebab", description: "Minced chicken and lamb cooked on skewers in the tandoor", price: 5.95, spiceLevel: 2 },
       { id: "lamb-tikka-s", name: "Lamb Tikka", description: "Tender lamb pieces cooked in the tandoor", price: 5.95, spiceLevel: 2 },
       { id: "mix-platter-s", name: "Mix Platter", description: "Chicken wings, tandoori chicken, seekh kebab and chicken tikka", price: 6.95, spiceLevel: 2 },
@@ -88,9 +97,11 @@ export const menuCategories: MenuCategory[] = [
     id: "tandoori-mains",
     label: "Tandoori Mains",
     description: "Served on a sizzling bed of onion with curry sauce on the side",
+    bannerImage: "/images/menu-image/sizzler-group.png",
+    variant: "tandoori",
     items: [
       { id: "tm-chicken-tikka", name: "Chicken Tikka", description: "Tender chicken breast pieces cooked in the tandoor", price: 10.95, spiceLevel: 2 },
-      { id: "tm-tandoori-chicken", name: "Tandoori Chicken", description: "Chicken marinated and smoke-roasted in the tandoor", price: 10.95, spiceLevel: 2 },
+      { id: "tm-tandoori-chicken", name: "Tandoori Chicken", description: "Chicken marinated and smoke-roasted in the tandoor", price: 10.95, spiceLevel: 2, image: "/images/food/6.jpg" },
       { id: "tm-seekh-kebab", name: "Seekh Kebab", description: "Minced chicken and lamb cooked on skewers in the tandoor", price: 10.95, spiceLevel: 2 },
       { id: "tm-lamb-tikka", name: "Lamb Tikka", description: "Tender lamb pieces cooked in the tandoor", price: 12.95, spiceLevel: 2 },
       { id: "tm-chicken-shashlik", name: "Chicken Tikka Shashlik", description: "Chicken marinated with capsicum, onion and garlic paste, cooked in the tandoor", price: 14.95, spiceLevel: 2 },
@@ -105,9 +116,10 @@ export const menuCategories: MenuCategory[] = [
     id: "mains",
     label: "Main Courses",
     description: "Choice of mild, medium or hot where available; rice and naan are not included",
+    bannerImage: "/images/menu-image/curry-1.png",
     items: [
       { id: "korma", name: "Korma", description: "Creamy mild curry made with coconut cream and ground almonds", price: { chicken: 9.95, lamb: 10.50, beef: 10.95, prawn: 11.50 }, spiceLevel: 1 },
-      { id: "tikka-masala", name: "Tikka Masala", description: "Marinated tikka simmered in a rich, creamy tomato-based sauce", price: { chicken: 10.50, lamb: 11.50, beef: 10.95, prawn: 11.50 }, spiceLevel: 2 },
+      { id: "tikka-masala", name: "Tikka Masala", description: "Marinated tikka simmered in a rich, creamy tomato-based sauce", price: { chicken: 10.50, lamb: 11.50, beef: 10.95, prawn: 11.50 }, spiceLevel: 2, image: "/images/food/12.jpg" },
       { id: "curry", name: "Curry", description: "Traditional onion and tomato based sauce flavoured with ginger and garlic", price: { chicken: 9.95, lamb: 10.95, beef: 10.95, prawn: 11.50, fish: 10.50 }, spiceLevel: 2 },
       { id: "rogan-josh", name: "Rogan Josh", description: "Aromatic tomato sauce flavoured with garlic and ginger", price: { chicken: 10.50, lamb: 10.95, beef: 10.95, prawn: 11.50 }, spiceLevel: 2 },
       { id: "karahi", name: "Karahi", description: "Cooked with ginger, garlic, onion and yoghurt for a smoky grilled flavour", price: { chicken: 11.95, lamb: 12.95, beef: 12.95, prawn: 12.95 }, spiceLevel: 2 },
@@ -125,6 +137,8 @@ export const menuCategories: MenuCategory[] = [
     id: "biryani",
     label: "Biryani",
     description: "Layered rice dishes served with side gravy",
+    bannerImage: "/images/menu-image/biryani.png",
+    variant: "biryani",
     items: [
       { id: "chicken-biryani", name: "Chicken Biryani", price: 12.50, spiceLevel: 2 },
       { id: "lamb-biryani", name: "Lamb Biryani", price: 13.50, spiceLevel: 2 },
@@ -137,6 +151,7 @@ export const menuCategories: MenuCategory[] = [
     id: "vegetarian",
     label: "Vegetable Dish",
     description: "Vegetarian dishes from the house menu",
+    bannerImage: "/images/menu-image/curry-2.png",
     items: [
       { id: "aloo-palak", name: "Aloo Palak", description: "Spinach and potatoes cooked together with spices", price: 8.95, spiceLevel: 2, isVegetarian: true },
       { id: "veg-curry", name: "Vegetable Curry", description: "Mixed vegetables in a spiced sauce", price: 8.50, spiceLevel: 2, isVegetarian: true },
@@ -165,9 +180,11 @@ export const menuCategories: MenuCategory[] = [
     id: "chef-specials",
     label: "Chef Special",
     description: "Chef special dishes from the house menu",
+    bannerImage: "/images/menu-image/curry.png",
+    variant: "chef",
     items: [
-      { id: "butter-chicken", name: "Butter Chicken", description: "Chicken cooked in a creamy sauce with butter, cream and spices", price: 11.50, spiceLevel: 1, isChefSpecial: true },
-      { id: "paneer-makhani", name: "Paneer Makhani", description: "Paneer in tomato sauce with butter and spices", price: 10.95, spiceLevel: 1, isChefSpecial: true, isVegetarian: true },
+      { id: "butter-chicken", name: "Butter Chicken", description: "Chicken cooked in a creamy sauce with butter, cream and spices", price: 11.50, spiceLevel: 1, isChefSpecial: true, image: "/images/food/2.jpeg" },
+      { id: "paneer-makhani", name: "Paneer Makhani", description: "Paneer in tomato sauce with butter and spices", price: 10.95, spiceLevel: 1, isChefSpecial: true, isVegetarian: true, image: "/images/food/1.jpeg" },
       { id: "chilli-chicken", name: "Chilli Chicken", description: "Chicken stir-fried with chillies, onions and sauces", price: 13.50, spiceLevel: 3, isChefSpecial: true },
       { id: "chicken-tikka-jaipuri", name: "Chicken Tikka Jaipuri", description: "Marinated chicken with yoghurt, spices and creamy tomato sauce", price: 11.50, spiceLevel: 2, isChefSpecial: true },
       { id: "honey-chicken", name: "Honey Chicken", description: "Chicken tossed in a sweet and savoury honey-based sauce", price: 10.95, spiceLevel: 1, isChefSpecial: true },
@@ -182,6 +199,7 @@ export const menuCategories: MenuCategory[] = [
     id: "breads-rice",
     label: "Rice & Naan Bread",
     description: "Rice and breads from the house menu",
+    bannerImage: "/images/menu-image/roti-rice-group.png",
     items: [
       { id: "boiled-rice", name: "Boiled Rice", price: 2.95, spiceLevel: 0, isVegetarian: true },
       { id: "pilau-rice", name: "Pilau Rice", price: 3.25, spiceLevel: 0, isVegetarian: true },
@@ -203,10 +221,11 @@ export const menuCategories: MenuCategory[] = [
     id: "desserts",
     label: "Dessert",
     description: "Desserts from the house menu",
+    bannerImage: "/images/menu-image/kulfi.png",
     items: [
       { id: "mango-kulfi", name: "Mango Kulfi", description: "Frozen dessert made with ripe mango pulp", price: 5.50, spiceLevel: 0, isVegetarian: true },
       { id: "pistachio-kulfi", name: "Pistachio Kulfi", description: "Frozen dessert flavoured with almonds, saffron and pistachio", price: 5.50, spiceLevel: 0, isVegetarian: true },
-      { id: "mango-cream", name: "Mango Cream with Ice Cream", price: 5.50, spiceLevel: 0, isVegetarian: true },
+      { id: "mango-cream", name: "Mango Cream with Ice Cream", price: 5.50, spiceLevel: 0, isVegetarian: true, image: "/images/food/13.jpg" },
       { id: "ice-cream", name: "Ice Cream", price: 3.95, spiceLevel: 0, isVegetarian: true },
     ],
   },

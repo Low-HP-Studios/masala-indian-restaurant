@@ -31,56 +31,44 @@ export default async function MenuPage({ params }: { params: Params }) {
     <>
       <Navbar locale={locale} copy={dict.nav} brand={dict.brand} />
 
-      <section className="relative flex h-[48vh] min-h-[380px] items-end justify-center overflow-hidden bg-dark">
+      <section className="relative flex h-[36vh] min-h-[320px] items-end justify-center overflow-hidden bg-dark pt-20">
         <Image
-          src="/images/food/2.jpeg"
-          alt="Masala menu tandoori dishes"
+          src="/images/hero-banner/tandoor-skewers.png"
+          alt="Tandoori platter from Masala Indian Restaurant"
           fill
           priority
-          className="object-cover object-center"
+          className="object-cover"
+          style={{ objectPosition: "center 52%" }}
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-black/25" />
+        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/55 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-        <div className="relative z-10 px-6 pb-14 text-center">
+        <div className="relative z-10 px-6 pb-10 text-center">
           <p className="section-label mb-3 text-saffron-light">{dict.menuPage.eyebrow}</p>
           <h1
             className="font-heading text-cream"
-            style={{ fontSize: "clamp(2.8rem, 6vw, 5.4rem)", textShadow: "0 8px 34px rgba(0,0,0,0.7)" }}
+            style={{ fontSize: "clamp(2.7rem, 5.5vw, 5rem)", textShadow: "0 8px 34px rgba(0,0,0,0.7)" }}
           >
-            {dict.menuPage.title} <em className="not-italic text-gold-light">{dict.menuPage.accent}</em>
+            {dict.menuPage.title} <em className="not-italic text-gold">{dict.menuPage.accent}</em>
           </h1>
+          <span className="mx-auto mt-5 block h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent" />
         </div>
       </section>
 
-      <div className="border-b border-line bg-surface-soft">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-4 text-sm text-ink-muted sm:flex-row lg:px-12">
-          <div className="flex items-center gap-6">
-            <span className="flex items-center gap-2">
-              <span className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-sm border border-green-600">
-                <span className="block h-2 w-2 rounded-full bg-green-600" />
-              </span>
-              {dict.menuPage.vegetarian}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <svg viewBox="0 0 24 24" fill="#E8830A" className="h-3.5 w-3.5">
-                <path d="M12 2C10 2 8 4 8 6c0 1.5.8 2.8 2 3.5V11H9a1 1 0 000 2h1v1.5C7.5 15.5 6 17.5 6 20a1 1 0 002 0c0-1.7 1.3-3 3-3s3 1.3 3 3a1 1 0 002 0c0-2.5-1.5-4.5-4-5.5V13h1a1 1 0 000-2h-1V9.5C13.2 8.8 14 7.5 14 6c0-2-2-4-2-4z" />
-              </svg>
-              {dict.menuPage.spiceIndicator}
-            </span>
-          </div>
-          <p className="text-xs text-ink-muted/70">{dict.menuPage.priceNote}</p>
-        </div>
-      </div>
-
-      <main className="min-h-screen bg-page">
+      <main className="min-h-screen parchment-bg">
         <MenuClient
           categories={categories}
           labels={{
             chefSpecial: dict.menuPage.chefSpecial,
             proteins: dict.menuPage.proteins,
             spice: dict.menuPage.spice,
+          }}
+          legend={{
+            vegetarian: dict.menuPage.vegetarian,
+            spiceIndicator: dict.menuPage.spiceIndicator,
+            priceNote: dict.menuPage.priceNote,
           }}
         />
       </main>

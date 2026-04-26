@@ -105,6 +105,7 @@ function MenuMark() {
 
 export default function Navbar({ locale, copy, brand }: Props) {
   const pathname = usePathname();
+  const isMenuRoute = pathname.split("/").filter(Boolean).at(1) === "menu";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
@@ -116,7 +117,7 @@ export default function Navbar({ locale, copy, brand }: Props) {
     const onScroll = () => {
       setScrolled(window.scrollY > 36);
 
-      if (pathname.includes("/menu")) {
+      if (isMenuRoute) {
         setActiveSection("menu");
         return;
       }
@@ -136,7 +137,7 @@ export default function Navbar({ locale, copy, brand }: Props) {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [pathname]);
+  }, [isMenuRoute]);
 
   useEffect(() => {
     if (theme === "system") {
@@ -182,21 +183,41 @@ export default function Navbar({ locale, copy, brand }: Props) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.2, 0.82, 0.22, 1], delay: 0.12 }}
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
-          scrolled || mobileOpen ? "bg-dark/92 shadow-2xl shadow-black/20 backdrop-blur-xl" : "bg-gradient-to-b from-black/75 via-black/35 to-transparent"
+          scrolled || mobileOpen ? "bg-dark/92 shadow-2xl shadow-black/20 backdrop-blur-xl" : "bg-gradient-to-b from-black/92 via-black/58 to-black/20"
         }`}
       >
         <div className="mx-auto max-w-7xl px-5 lg:px-12">
-          <div className="flex h-20 items-center justify-between gap-5 border-b border-cream/10 lg:h-[76px]">
-            <RouteTransitionLink href={localizePath(locale, "/")} className="group flex flex-col leading-none">
-              <span className="font-heading text-[1.95rem] font-normal tracking-[0.08em] text-cream transition-colors group-hover:text-gold-light">
-                {brand.name}
-              </span>
-              <span className="mt-1 text-[0.68rem] font-semibold tracking-[0.18em] text-saffron-light">
-                {brand.descriptor}
-              </span>
-            </RouteTransitionLink>
+          <div className="flex h-20 items-center justify-between gap-3 border-b border-cream/10 sm:gap-5">
+            <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
+              <RouteTransitionLink href={localizePath(locale, "/")} className="group flex min-w-0 flex-col leading-none">
+                <span className="font-heading text-[1.65rem] font-normal tracking-[0.08em] text-cream transition-colors group-hover:text-gold-light sm:text-[1.95rem]">
+                  {brand.name}
+                </span>
+                <span className="mt-1 text-[0.58rem] font-semibold tracking-[0.18em] text-saffron-light sm:text-[0.68rem]">
+                  {brand.descriptor}
+                </span>
+              </RouteTransitionLink>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+              {isMenuRoute && (
+                <span className="hidden shrink-0 items-center gap-2 rounded-full border border-saffron-light/35 bg-saffron/14 px-3 py-1.5 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-saffron-light shadow-[0_10px_30px_rgba(0,0,0,0.22)] sm:inline-flex">
+                  <MenuMark />
+                  {copy.menuLink}
+                </span>
+              )}
+            </div>
+
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            {isMenuRoute && (
+              <span className="hidden lg:inline-flex">
+                <a
+                  href="tel:+34631751388"
+                  className="masala-btn masala-btn-filled px-4 py-2.5 text-sm font-semibold text-cream focus:outline-none focus:ring-2 focus:ring-[var(--ambient-accent)]/70"
+                >
+                  {copy.reserve}
+                </a>
+              </span>
+            )}
+
             <div className="relative z-[90]">
               <button
                 type="button"
@@ -285,7 +306,7 @@ export default function Navbar({ locale, copy, brand }: Props) {
                 setThemeOpen(false);
                 setMobileOpen((open) => !open);
               }}
-              className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 bg-transparent text-cream transition hover:text-[var(--ambient-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--ambient-accent)]/55 md:hidden"
+              className={`h-11 w-11 flex-col items-center justify-center gap-1.5 bg-transparent text-cream transition hover:text-[var(--ambient-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--ambient-accent)]/55 md:hidden ${isMenuRoute ? "hidden" : "flex"}`}
               aria-label={copy.toggle}
               aria-expanded={mobileOpen}
               aria-controls="mobile-navigation"
@@ -297,6 +318,7 @@ export default function Navbar({ locale, copy, brand }: Props) {
           </div>
         </div>
 
+        {!isMenuRoute && (
         <div className="hidden h-14 items-center justify-between md:flex">
           <div className="flex items-center gap-5 lg:gap-8">
             {navLinks.map((link) => (
@@ -326,6 +348,7 @@ export default function Navbar({ locale, copy, brand }: Props) {
             {copy.reserve}
           </a>
         </div>
+        )}
       </div>
 
       </motion.header>

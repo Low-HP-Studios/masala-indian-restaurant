@@ -54,7 +54,7 @@ export default function FeaturedDishes({ copy }: Props) {
                   <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent" />
 
                   {/* Tagline badge */}
-                  <div className="absolute top-4 left-4 bg-saffron px-3 py-1">
+                  <div className="absolute top-4 left-4 bg-saffron-dark px-3 py-1">
                     <span className="text-cream text-xs font-semibold font-body">{dish.tagline}</span>
                   </div>
 

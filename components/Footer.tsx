@@ -43,7 +43,9 @@ export default function Footer({ locale, copy, nav, brand }: Props) {
             {/* Social icons */}
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://www.instagram.com/masalaindian121"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Instagram"
                 className="w-9 h-9 border border-cream/20 flex items-center justify-center hover:border-saffron hover:text-saffron transition-colors duration-300 text-cream/50"
               >
@@ -52,7 +54,9 @@ export default function Footer({ locale, copy, nav, brand }: Props) {
                 </svg>
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/share/1ELFAgnBns/"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Facebook"
                 className="w-9 h-9 border border-cream/20 flex items-center justify-center hover:border-saffron hover:text-saffron transition-colors duration-300 text-cream/50"
               >
@@ -112,19 +116,29 @@ export default function Footer({ locale, copy, nav, brand }: Props) {
             <div className="space-y-4 text-sm font-body text-cream/60">
               <div>
                 <p className="text-cream/40 text-xs font-semibold mb-1">{copy.address}</p>
-                <p>Calle San Antonio Zen, 7</p>
-                <p>Locale 14</p>
+                <p>Av. Mediterráneo 33, esq. Puerta del Cairo, 1</p>
+                <p>Local 1B</p>
+                <p>Guardamar del Segura, Spain</p>
               </div>
               <div>
                 <p className="text-cream/40 text-xs font-semibold mb-1">{copy.phone}</p>
                 <a href="tel:+34631751388" className="hover:text-saffron transition-colors duration-200">
-                  +34 631 751 388
+                  +34 631 75 13 88
+                </a>
+              </div>
+              <div>
+                <p className="text-cream/40 text-xs font-semibold mb-1">{copy.email}</p>
+                <a
+                  href="mailto:ks5255708@gmail.com"
+                  className="hover:text-saffron transition-colors duration-200"
+                >
+                  ks5255708@gmail.com
                 </a>
               </div>
               <div>
                 <p className="text-cream/40 text-xs font-semibold mb-1">{copy.hours}</p>
                 <a href="tel:+34631751388" className="hover:text-saffron transition-colors duration-200">
-                  +34 631 751 388
+                  +34 631 75 13 88
                 </a>
               </div>
             </div>

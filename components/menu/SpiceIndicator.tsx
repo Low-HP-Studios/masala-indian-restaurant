@@ -1,4 +1,6 @@
 import type { SpiceLevel } from "@/data/menu";
+import { SPICE_LEVEL_COLOR } from "@/lib/menu-ui";
+import PepperIcon from "./PepperIcon";
 
 type Props = {
   level: SpiceLevel;
@@ -8,22 +10,18 @@ type Props = {
 
 export default function SpiceIndicator({ level, showLabel = false, labels }: Props) {
   if (level === 0) return null;
+  const color = SPICE_LEVEL_COLOR[level];
 
   return (
-    <div className="flex items-center gap-1" title={labels[level]}>
-      {Array.from({ length: 4 }).map((_, i) => (
-        <svg
-          key={i}
-          viewBox="0 0 24 24"
-          className={`w-3.5 h-3.5 transition-opacity ${i < level ? "opacity-100" : "opacity-20"}`}
-          fill={i < level ? "#E8830A" : "#7A6555"}
-        >
-          <path d="M12 2C10 2 8 4 8 6c0 1.5.8 2.8 2 3.5V11H9a1 1 0 000 2h1v1.5C7.5 15.5 6 17.5 6 20a1 1 0 002 0c0-1.7 1.3-3 3-3s3 1.3 3 3a1 1 0 002 0c0-2.5-1.5-4.5-4-5.5V13h1a1 1 0 000-2h-1V9.5C13.2 8.8 14 7.5 14 6c0-2-2-4-2-4z" />
-        </svg>
+    <span className="inline-flex items-baseline gap-0.5" title={labels[level]} aria-label={labels[level]}>
+      {Array.from({ length: level }).map((_, i) => (
+        <PepperIcon key={i} color={color} className="h-3 w-3" />
       ))}
       {showLabel && (
-        <span className="text-xs text-ink-muted ml-1 font-body">{labels[level]}</span>
+        <span className="ml-1 font-body text-xs" style={{ color }}>
+          {labels[level]}
+        </span>
       )}
-    </div>
+    </span>
   );
 }

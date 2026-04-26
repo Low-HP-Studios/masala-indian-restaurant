@@ -61,7 +61,7 @@ export default function Hero({ locale, copy }: Props) {
   return (
     <section
       id="home"
-      className="relative flex h-screen min-h-[680px] items-center justify-center overflow-hidden bg-dark"
+      className="relative flex min-h-[680px] min-h-svh flex-col overflow-hidden bg-dark"
       style={{ "--hero-accent": slides[current].accent } as CSSProperties}
     >
       {slides.map((slide, i) => (
@@ -97,31 +97,13 @@ export default function Hero({ locale, copy }: Props) {
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/45 to-black/30" />
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/55 via-transparent to-black/30" />
 
-      <div className="absolute bottom-24 left-1/2 z-30 flex -translate-x-1/2 gap-2">
-        {slides.map((_, i) => (
-          <motion.button
-            key={i}
-            type="button"
-            onClick={() => {
-              setPrev(current);
-              setCurrent(i);
-            }}
-            aria-label={`Go to slide ${i + 1}`}
-            whileHover={{ scaleY: 1.4 }}
-            whileTap={{ scale: 0.9 }}
-            className={`h-1 rounded-full transition-all duration-500 ${
-              i === current ? "w-9 bg-[var(--hero-accent)]" : "w-4 bg-cream/35 hover:bg-cream/65"
-            }`}
-          />
-        ))}
-      </div>
-
-      <motion.div
-        variants={heroContainer}
-        initial="hidden"
-        animate="show"
-        className="relative z-30 mx-auto max-w-5xl px-6 pt-28 text-center lg:pt-32"
-      >
+      <div className="relative z-30 flex min-h-0 w-full flex-1 flex-col">
+        <motion.div
+          variants={heroContainer}
+          initial="hidden"
+          animate="show"
+          className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center px-6 pb-6 pt-28 text-center md:pt-40"
+        >
         <motion.p variants={heroItem} className="section-label mb-5 text-[var(--hero-accent)]">
           {copy.eyebrow}
         </motion.p>
@@ -190,14 +172,29 @@ export default function Hero({ locale, copy }: Props) {
             </a>
           </MotionPressable>
         </motion.div>
-      </motion.div>
+        </motion.div>
 
-      <div className="absolute bottom-9 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2">
-        <span className="text-xs font-semibold tracking-[0.18em] text-cream/60">{copy.scroll}</span>
-        <div className="animate-bounce-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} className="h-5 w-5 text-cream/60">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
+        <div
+          className="flex w-full shrink-0 items-center justify-start gap-2 px-4 py-3 sm:px-8 md:px-10"
+          style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+          role="group"
+        >
+          {slides.map((_, i) => (
+            <motion.button
+              key={i}
+              type="button"
+              onClick={() => {
+                setPrev(current);
+                setCurrent(i);
+              }}
+              aria-label={`Go to slide ${i + 1}`}
+              whileHover={{ scaleY: 1.4 }}
+              whileTap={{ scale: 0.9 }}
+              className={`h-1 shrink-0 rounded-full transition-all duration-500 ${
+                i === current ? "w-9 bg-[var(--hero-accent)]" : "w-4 bg-cream/35 hover:bg-cream/65"
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>

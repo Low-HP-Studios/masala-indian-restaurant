@@ -289,15 +289,17 @@ html {
 
 .masala-btn {
   --button-fill: var(--ambient-accent);
+  --btn-surface: color-mix(in srgb, var(--button-fill) 48%, #0a0806 52%);
   position: relative;
   isolation: isolate;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--button-fill) 58%, #fff 18%);
+  border: 1px solid color-mix(in srgb, var(--btn-surface) 70%, #fff 14%);
   border-radius: 1rem 0.28rem 1rem 0.28rem;
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+  color: var(--cream);
   transition:
     border-color 240ms ease,
     color 240ms ease,
@@ -310,8 +312,11 @@ html {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--button-fill) 92%, #fff 8%), var(--button-fill));
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--btn-surface) 90%, #000 10%),
+    var(--btn-surface)
+  );
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 360ms cubic-bezier(0.19, 1, 0.22, 1);
@@ -322,7 +327,7 @@ html {
   position: absolute;
   inset: 5px;
   z-index: -1;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid color-mix(in srgb, var(--btn-surface) 20%, #fff 12%);
   border-radius: 0.65rem 0.18rem 0.65rem 0.18rem;
   pointer-events: none;
 }
@@ -330,8 +335,8 @@ html {
 .masala-btn:hover,
 .masala-btn:focus-visible {
   color: var(--cream);
-  border-color: color-mix(in srgb, var(--button-fill) 72%, #fff 24%);
-  box-shadow: 0 22px 52px color-mix(in srgb, var(--button-fill) 24%, transparent);
+  border-color: color-mix(in srgb, var(--btn-surface) 64%, #fff 22%);
+  box-shadow: 0 22px 52px color-mix(in srgb, var(--btn-surface) 35%, transparent);
   transform: translateY(-1px);
 }
 
@@ -342,11 +347,19 @@ html {
 
 .masala-btn-filled::before {
   transform: scaleX(1);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--btn-surface) 90%, #000 10%),
+    var(--btn-surface)
+  );
 }
 
 .masala-btn-filled {
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--button-fill) 92%, #fff 8%), var(--button-fill));
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--btn-surface) 90%, #000 10%),
+    var(--btn-surface)
+  );
 }
 
 .masala-btn-filled:hover::before,
@@ -431,6 +444,17 @@ main section[id] {
   color: color-mix(in srgb, var(--ambient-accent) 70%, var(--cream) 30%);
 }
 
+.menu-subnav {
+  isolation: isolate;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
 /* Scroll reveal */
 .reveal {
   opacity: 0;
@@ -462,6 +486,219 @@ main section[id] {
   letter-spacing: 0.18em;
   text-transform: none;
   color: var(--saffron);
+}
+
+/* Parchment paper background */
+.parchment-bg {
+  background-color: #f5e9c8;
+  background-image:
+    radial-gradient(ellipse at 20% 15%, rgba(150, 105, 50, 0.10), transparent 55%),
+    radial-gradient(ellipse at 80% 85%, rgba(120, 80, 30, 0.10), transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 245, 220, 0.45), transparent 70%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(140, 95, 40, 0.025) 0 2px,
+      transparent 2px 6px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(140, 95, 40, 0.02) 0 2px,
+      transparent 2px 6px
+    ),
+    linear-gradient(180deg, #f7ecd1, #efe0b8);
+  position: relative;
+}
+
+.parchment-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 22%, rgba(120, 75, 25, 0.12), transparent 8%),
+    radial-gradient(circle at 88% 35%, rgba(120, 75, 25, 0.10), transparent 6%),
+    radial-gradient(circle at 38% 78%, rgba(120, 75, 25, 0.08), transparent 7%),
+    radial-gradient(circle at 72% 88%, rgba(120, 75, 25, 0.10), transparent 5%);
+  mix-blend-mode: multiply;
+  z-index: 0;
+}
+
+.parchment-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+[data-theme="dark"] .parchment-bg {
+  background-color: var(--page);
+  background-image:
+    radial-gradient(ellipse at 22% 18%, color-mix(in srgb, var(--saffron) 12%, transparent), transparent 52%),
+    radial-gradient(ellipse at 78% 82%, color-mix(in srgb, var(--maroon) 14%, transparent), transparent 55%),
+    repeating-linear-gradient(
+      45deg,
+      color-mix(in srgb, var(--cream) 4%, transparent) 0 2px,
+      transparent 2px 6px
+    ),
+    linear-gradient(180deg, var(--surface) 0%, var(--page) 100%);
+}
+
+[data-theme="dark"] .parchment-bg::before {
+  background:
+    radial-gradient(circle at 10% 20%, color-mix(in srgb, var(--gold) 8%, transparent), transparent 8%),
+    radial-gradient(circle at 90% 30%, color-mix(in srgb, var(--saffron) 6%, transparent), transparent 6%),
+    radial-gradient(circle at 40% 75%, rgba(0, 0, 0, 0.2), transparent 8%);
+  mix-blend-mode: soft-light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .parchment-bg {
+    background-color: var(--page);
+    background-image:
+      radial-gradient(ellipse at 22% 18%, color-mix(in srgb, var(--saffron) 12%, transparent), transparent 52%),
+      radial-gradient(ellipse at 78% 82%, color-mix(in srgb, var(--maroon) 14%, transparent), transparent 55%),
+      repeating-linear-gradient(
+        45deg,
+        color-mix(in srgb, var(--cream) 4%, transparent) 0 2px,
+        transparent 2px 6px
+      ),
+      linear-gradient(180deg, var(--surface) 0%, var(--page) 100%);
+  }
+
+  :root:not([data-theme="light"]) .parchment-bg::before {
+    background:
+      radial-gradient(circle at 10% 20%, color-mix(in srgb, var(--gold) 8%, transparent), transparent 8%),
+      radial-gradient(circle at 90% 30%, color-mix(in srgb, var(--saffron) 6%, transparent), transparent 6%),
+      radial-gradient(circle at 40% 75%, rgba(0, 0, 0, 0.2), transparent 8%);
+    mix-blend-mode: soft-light;
+  }
+}
+
+.parchment-dark {
+  background-color: #1c130a;
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba(201, 151, 60, 0.12), transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(111, 23, 23, 0.20), transparent 60%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(248, 236, 215, 0.02) 0 1px,
+      transparent 1px 3px
+    ),
+    linear-gradient(180deg, #221710, #15100a);
+}
+
+/* Dotted leader between item name and price */
+.menu-leader {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.menu-leader__dots {
+  flex: 1;
+  border-bottom: 2px dotted color-mix(in srgb, var(--ink) 32%, transparent);
+  transform: translateY(-0.32rem);
+  min-width: 1.5rem;
+}
+
+.parchment-dark .menu-leader__dots {
+  border-bottom-color: color-mix(in srgb, var(--gold-light) 35%, transparent);
+}
+
+[data-theme="dark"] .menu-leader__dots {
+  border-bottom-color: color-mix(in srgb, var(--gold-light) 35%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .menu-leader__dots {
+    border-bottom-color: color-mix(in srgb, var(--gold-light) 35%, transparent);
+  }
+}
+
+.section-frame--chef {
+  position: relative;
+}
+
+/* Tandoori ember pulse */
+@keyframes ember-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.05); }
+}
+.ember-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    rgba(217, 119, 6, 0.45),
+    rgba(111, 23, 23, 0.25) 40%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  animation: ember-pulse 4.5s ease-in-out infinite;
+}
+
+/* Biryani steam rise */
+@keyframes steam-rise {
+  0% { transform: translateY(20%) scale(1); opacity: 0; }
+  30% { opacity: 0.6; }
+  100% { transform: translateY(-40%) scale(1.6); opacity: 0; }
+}
+.steam-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.steam-overlay::before,
+.steam-overlay::after {
+  content: "";
+  position: absolute;
+  bottom: 10%;
+  width: 30%;
+  height: 70%;
+  background: radial-gradient(ellipse, rgba(255, 250, 230, 0.45), transparent 65%);
+  filter: blur(14px);
+  animation: steam-rise 6s ease-out infinite;
+}
+.steam-overlay::before { left: 25%; }
+.steam-overlay::after { left: 55%; animation-delay: 2.5s; }
+
+/* Banner fade-out into parchment */
+.banner-fade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, var(--parchment-fade, #f5e9c8) 100%);
+  pointer-events: none;
+}
+
+/* Saffron flourish for biryani section heading */
+.saffron-flourish::before {
+  content: "❋";
+  margin-right: 0.5rem;
+  color: var(--saffron);
+  font-size: 0.85em;
+}
+
+/* Chef gold dot before name */
+.chef-dot::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--gold);
+  margin-right: 0.55rem;
+  vertical-align: middle;
+  box-shadow: 0 0 6px rgba(201, 151, 60, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ember-glow,
+  .steam-overlay::before,
+  .steam-overlay::after {
+    animation: none !important;
+  }
 }
 
 /* Diagonal section transition */
