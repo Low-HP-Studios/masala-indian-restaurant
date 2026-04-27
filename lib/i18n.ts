@@ -1,7 +1,7 @@
 import type { MenuCategory, MenuItem, SpiceLevel } from "@/data/menu";
 import { menuCategories } from "@/data/menu";
 
-export const locales = ["en", "nl", "es", "fr"] as const;
+export const locales = ["en", "nl", "es", "fr", "no"] as const;
 export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = "en";
@@ -11,6 +11,7 @@ export const languageLabels: Record<Locale, { name: string; code: string }> = {
   nl: { name: "Dutch", code: "NL" },
   es: { name: "Spanish", code: "ES" },
   fr: { name: "French", code: "FR" },
+  no: { name: "Norwegian", code: "NO" },
 };
 
 export function isLocale(value: string): value is Locale {
@@ -634,6 +635,168 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
       spice: { 0: "Non epice", 1: "Doux", 2: "Moyen", 3: "Fort", 4: "Tres fort" },
     },
   },
+  no: {
+    meta: {
+      homeTitle: "Masala Indian Restaurant | Autentisk indisk mat",
+      homeDescription:
+        "Opplev autentiske indiske smaker hos Masala Indian Restaurant med tandoori, curry, vegetaralternativer og full drikkemeny.",
+      menuTitle: "Meny | Masala Indian Restaurant",
+      menuDescription:
+        "Utforsk hele menyen vår med indiske forretter, tandoori, hovedretter, biryani, desserter og drikke.",
+    },
+    brand: { name: "Masala", descriptor: "Indian Restaurant" },
+    nav: {
+      home: "Hjem",
+      menu: "Meny",
+      about: "Om oss",
+      contact: "Kontakt",
+      story: "Historie",
+      signature: "Retter",
+      preview: "Galleri",
+      menuLink: "Meny",
+      reserve: "Reserver bord",
+      toggle: "Åpne meny",
+      language: "Bytt språk",
+    },
+    hero: {
+      eyebrow: "Autentisk Indisk Mat",
+      titleTop: "Smak",
+      titleAccent: "Sjelen til India",
+      body:
+        "Klassiske indiske retter, tandoori-favoritter, vegetaralternativer og full drikkemeny, servert med varme.",
+      primary: "Se meny",
+      secondary: "Reserver bord",
+      scroll: "Scroll",
+    },
+    story: {
+      eyebrow: "Vår historie",
+      title: "Hvor arv",
+      accent: "møter gjestfrihet",
+      body1:
+        "Masala er en indisk restaurant med et bredt utvalg av tandoori, curry, biryani, vegetarretter, desserter og drikke.",
+      body2:
+        "Fra leirovn til duftende curry og ferskt brød er hele menyen bygget rundt kjente indiske favoritter.",
+      primary: "Bestill bord",
+      secondary: "Se meny",
+      stat: "Spesialmeny",
+    },
+    stats: [
+      { value: 90, suffix: "+", label: "Retter" },
+      { value: 70, suffix: "+", label: "Drikke" },
+      { value: 19, suffix: ".95", prefix: "€", displayValue: "€19.95", label: "Spesialmeny" },
+      { value: 4, suffix: "", label: "Barnemenyer" },
+    ],
+    featured: {
+      eyebrow: "Signaturretter",
+      title: "Lagd med",
+      accent: "Lidenskap",
+      dishes: [
+        {
+          ...baseFeatured[0],
+          name: "Butter Chicken",
+          tagline: "Kokkens signatur",
+          description: "Mør kylling i rik tomatsaus og smør, et indisk ikon på ny.",
+          price: "€11.50",
+        },
+        {
+          ...baseFeatured[1],
+          name: "Mix Grill Sizzler",
+          tagline: "Tandoori-spesial",
+          description: "Et sydende fat med chicken tikka, seekh kebab og lamb tikka.",
+          price: "€15.95",
+        },
+        {
+          ...baseFeatured[2],
+          name: "Rogan Josh",
+          tagline: "Kashmir-klassiker",
+          description: "Langtidskokt lam i aromatisk kashmirsaus med hele krydder.",
+          price: "fra €10.95",
+        },
+      ],
+    },
+    menuPreview: {
+      eyebrow: "Utforsk menyen",
+      title: "En verden av",
+      accent: "Smak",
+      viewMenu: "Se meny",
+      viewFull: "Se full meny",
+      categories: [
+        { id: "starters", label: "Forretter", tagline: "Lett og livlig", image: "/images/food/11.jpg" },
+        { id: "tandoori", label: "Tandoori", tagline: "Fra leirovnen", image: "/images/food/9.jpg" },
+        { id: "mains", label: "Hovedretter", tagline: "Mettende og aromatisk", image: "/images/food/8.jpg" },
+        { id: "soft-drinks", label: "Drikke", tagline: "Fra lassi til cocktail", image: "/images/food/drink.png" },
+      ],
+    },
+    gallery: { eyebrow: "Vår verden", title: "En fest for", accent: "Øyet" },
+    values: {
+      eyebrow: "Hvorfor Masala",
+      title: "Masala",
+      accent: "Løftet",
+      items: [
+        {
+          title: "Indiske favoritter",
+          text: "Menyen inkluderer kjente indiske retter, fra tandoori til curry og biryani.",
+        },
+        {
+          title: "Full meny",
+          text: "Vegetarretter, brød, ris, desserter og drikke står tydelig på husets menyer.",
+        },
+        {
+          title: "Varm gjestfrihet",
+          text: "Ring for å reservere eller besøk oss i Av. Mediterráneo 33, Local 1B, Guardamar del Segura.",
+        },
+      ],
+    },
+    cta: {
+      eyebrow: "Reserver bord",
+      title: "Klar til å oppleve",
+      accent: "India i kveld?",
+      body:
+        "Samle venner og familie til indiske forretter, tandoori, curry, biryani, desserter og drikke.",
+      hours: "Ring for å reservere",
+      addressLine: "Av. Mediterráneo 33, Guardamar del Segura – drop-in velkommen",
+    },
+    footer: {
+      summary: "Indiske forretter, tandoori, curry, biryani, vegetarretter, desserter og drikke.",
+      navigation: "Navigasjon",
+      menu: "Menyen vår",
+      visit: "Besøk oss",
+      address: "Adresse",
+      phone: "Telefon",
+      email: "E-post",
+      hours: "Reservasjoner",
+      rights: "Alle rettigheter forbeholdt.",
+      crafted: "Lagd med kjærlighet for indisk mat",
+      links: {
+        fullMenu: "Full meny",
+        special: "Spesialmeny",
+        starters: "Forretter",
+        tandoori: "Tandoori",
+        mains: "Hovedretter",
+        chef: "Kokkens spesialiteter",
+        drinks: "Drikke",
+      },
+    },
+    menuPage: {
+      eyebrow: "Masala Indian Restaurant",
+      title: "Vår",
+      accent: "meny",
+      vegetarian: "Vegetar",
+      spiceIndicator: "Styrkegrad",
+      priceNote: "Alle priser i euro · Avhengig av tilgjengelighet",
+      chefSpecial: "Spesial",
+      proteins: {
+        chicken: "Kylling",
+        lamb: "Lam",
+        beef: "Storfe",
+        prawn: "Reke",
+        fish: "Fisk",
+        vegetable: "Veg",
+        special: "Spesial",
+      },
+      spice: { 0: "Ikke sterk", 1: "Mild", 2: "Medium", 3: "Sterk", 4: "Ekstra sterk" },
+    },
+  },
 };
 
 const menuCategoryText: Record<Locale, Partial<Record<string, Pick<MenuCategory, "label" | "description">>>> = {
@@ -692,6 +855,27 @@ const menuCategoryText: Record<Locale, Partial<Record<string, Pick<MenuCategory,
     "beer-spirits": { label: "Bieres et spiritueux", description: "Biere, bieres bouteille, spiritueux, brandy et whisky" },
     "cocktails-coffees": { label: "Cocktails et cafes", description: "Cocktails et cafes de la carte des boissons" },
   },
+  no: {
+    "special-menu": {
+      label: "Spesialmeny",
+      description: "Forrett, hovedrett, ris eller naan og et glass vin, lite øl eller mineralvann",
+    },
+    starters: { label: "Forretter", description: "Start reisen med livlige småretter" },
+    tandoori: { label: "Tandoori", description: "Marinert og tilberedt i vår autentiske leirovn" },
+    "tandoori-mains": { label: "Tandoori hovedretter", description: "Serveres sydende på løk med currysaus" },
+    mains: { label: "Hovedretter", description: "Velg saus og protein, fra mild til sterk" },
+    "chef-specials": { label: "Kokkens spesialiteter", description: "Kokkens mest populære kreasjoner" },
+    biryani: { label: "Biryani", description: "Duftende basmatiris langkokt med krydder" },
+    vegetarian: { label: "Vegetar", description: "Plantebaserte retter fulle av smak og tradisjon" },
+    kids: { label: "Barnemenyer", description: "Barnemenyer fra husets meny" },
+    "breads-rice": { label: "Brød og ris", description: "Det perfekte tilbehøret" },
+    desserts: { label: "Desserter", description: "En søt avslutning på det indiske måltidet" },
+    "soft-drinks": { label: "Mineralvann og brus", description: "Brus og leskedrikker fra drikkemenyen" },
+    "waters-indian-drinks": { label: "Vann og indiske drikker", description: "Vann, tonic, gaseosa og lassi" },
+    wines: { label: "Vin", description: "Hvit, rød, rosé og musserende" },
+    "beer-spirits": { label: "Øl og brennevin", description: "Øl, flaskeøl, brennevin, brandy og whisky" },
+    "cocktails-coffees": { label: "Cocktail og kaffe", description: "Cocktail og kaffe fra drikkemenyen" },
+  },
 };
 
 const noteText: Record<Locale, Record<string, string>> = {
@@ -699,6 +883,7 @@ const noteText: Record<Locale, Record<string, string>> = {
   nl: { "2 pieces": "2 stuks", "Per person": "Per persoon" },
   es: { "2 pieces": "2 piezas", "Per person": "Por persona" },
   fr: { "2 pieces": "2 pieces", "Per person": "Par personne" },
+  no: { "2 pieces": "2 stk", "Per person": "Per person" },
 };
 
 function localizeItem(locale: Locale, item: MenuItem): MenuItem {
@@ -717,6 +902,7 @@ function draftMenuDescription(locale: Locale, description: string) {
     nl: "Huisgemaakte bereiding:",
     es: "Preparacion de la casa:",
     fr: "Preparation maison:",
+    no: "Husets tilberedelse:",
   };
   if (locale === "en") return description;
   return `${prefix[locale]} ${description}`;
