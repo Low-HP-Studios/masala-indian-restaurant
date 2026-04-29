@@ -805,7 +805,7 @@ export const dictionaries: Record<Locale, SiteDictionary> = {
   },
 };
 
-const menuCategoryText: Record<Locale, Partial<Record<string, Pick<MenuCategory, "label" | "description">>>> = {
+export const menuCategoryText: Record<Locale, Partial<Record<string, Pick<MenuCategory, "label" | "description">>>> = {
   en: {},
   nl: {
     "special-menu": { label: "Speciaal menu", description: "Voorgerecht, hoofdgerecht, rijst of naan en een glas wijn, klein bier of frisdrank" },

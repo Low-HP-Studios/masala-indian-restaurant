@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Marcellus } from "next/font/google";
+import { Marcellus, Geist } from "next/font/google";
 import ConsoleBrand from "@/components/ConsoleBrand";
 import EntryTransition from "@/components/EntryTransition";
 import MotionProvider from "@/components/MotionProvider";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const marcellus = Marcellus({
   subsets: ["latin"],
@@ -28,7 +31,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={marcellus.variable} data-scroll-behavior="smooth">
+    <html lang="en" className={cn("font-sans", geist.variable)} data-scroll-behavior="smooth">
       <head>
         <script dangerouslySetInnerHTML={{__html:`(function(){try{if(!sessionStorage.getItem('masala-entry-transition-complete')){var s=document.createElement('style');s.id='entry-block';s.textContent='body{visibility:hidden}';document.head.appendChild(s);}}catch(e){}})();`}} />
         <noscript><style>{`body{visibility:visible!important}`}</style></noscript>

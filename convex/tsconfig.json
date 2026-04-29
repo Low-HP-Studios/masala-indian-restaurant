@@ -18,8 +18,11 @@
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@/*": ["../*"]
+    }
   },
-  "include": ["./**/*"],
+  "include": ["./**/*", "../lib/**/*", "../data/**/*"],
   "exclude": ["./_generated"]
 }

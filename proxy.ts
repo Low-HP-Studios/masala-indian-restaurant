@@ -5,6 +5,7 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const firstSegment = pathname.split("/")[1];
 
+  if (firstSegment === "admin") return NextResponse.next();
   if (isLocale(firstSegment)) return NextResponse.next();
 
   const url = request.nextUrl.clone();
