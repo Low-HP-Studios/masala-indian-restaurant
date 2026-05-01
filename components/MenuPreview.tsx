@@ -4,7 +4,7 @@ import MotionPressable from "./MotionPressable";
 import RevealOnScroll from "./RevealOnScroll";
 import RouteTransitionLink from "./RouteTransitionLink";
 import type { SiteDictionary } from "@/lib/i18n";
-import { localizePath, type Locale } from "@/lib/locales";
+import { type Locale, localizePath } from "@/lib/locales";
 
 type Props = {
   locale: Locale;
@@ -36,7 +36,7 @@ export default function MenuPreview({ locale, copy }: Props) {
               <MotionLift>
                 <RouteTransitionLink
                   href={localizePath(locale, `/menu#${cat.id}`)}
-                  className="group relative block w-full aspect-[3/4] overflow-hidden"
+                  className="group relative block w-full aspect-3/4 overflow-hidden"
                 >
                   <SkeletonImage
                     src={cat.image}
@@ -47,7 +47,7 @@ export default function MenuPreview({ locale, copy }: Props) {
                     skeletonClassName="bg-zinc-800"
                   />
                   {/* Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent transition-opacity duration-300 group-hover:from-maroon/80" />
+                  <div className="absolute inset-0 bg-linear-to-t from-dark/80 via-dark/20 to-transparent transition-opacity duration-300 group-hover:from-maroon/80" />
 
                   {/* Content */}
                   <div className="absolute bottom-0 left-0 right-0 p-5">
@@ -59,8 +59,16 @@ export default function MenuPreview({ locale, copy }: Props) {
                     </h3>
                     <span className="inline-flex items-center gap-2 text-cream/70 text-xs font-semibold font-body group-hover:text-gold transition-colors duration-300">
                       {copy.viewMenu}
-                      <svg viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1">
-                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                      <svg
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                          clipRule="evenodd"
+                        />
                       </svg>
                     </span>
                   </div>

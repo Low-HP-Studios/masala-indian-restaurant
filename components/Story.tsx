@@ -4,7 +4,7 @@ import MotionPressable from "./MotionPressable";
 import RevealOnScroll from "./RevealOnScroll";
 import RouteTransitionLink from "./RouteTransitionLink";
 import type { SiteDictionary } from "@/lib/i18n";
-import { localizePath, type Locale } from "@/lib/locales";
+import { type Locale, localizePath } from "@/lib/locales";
 
 type Props = {
   locale: Locale;
@@ -35,8 +35,12 @@ export default function Story({ locale, copy, image }: Props) {
               <br />
               <em className="text-maroon not-italic">{copy.accent}</em>
             </h2>
-            <p className="text-ink-muted font-body leading-relaxed mb-6 text-lg">{copy.body1}</p>
-            <p className="text-ink-muted font-body leading-relaxed mb-10">{copy.body2}</p>
+            <p className="text-ink-muted font-body leading-relaxed mb-6 text-lg">
+              {copy.body1}
+            </p>
+            <p className="text-ink-muted font-body leading-relaxed mb-10">
+              {copy.body2}
+            </p>
 
             <div className="flex items-center gap-6">
               <MotionPressable>
@@ -62,7 +66,7 @@ export default function Story({ locale, copy, image }: Props) {
           {/* Image grid */}
           <RevealOnScroll delay={2} className="relative">
             {/* Main image */}
-            <div className="relative aspect-[4/5] rounded-sm overflow-hidden shadow-2xl">
+            <div className="relative aspect-4/5 rounded-sm overflow-hidden shadow-2xl">
               <SkeletonImage
                 src={image.src}
                 alt={image.alt}
@@ -77,8 +81,12 @@ export default function Story({ locale, copy, image }: Props) {
 
             {/* Floating accent card */}
             <div className="absolute -bottom-6 -left-6 bg-maroon text-cream p-6 shadow-xl hidden lg:block">
-              <p className="font-heading text-4xl font-semibold text-gold">€19.95</p>
-              <p className="text-sm text-cream/80 font-semibold font-body mt-1">{copy.stat}</p>
+              <p className="font-heading text-4xl font-semibold text-gold">
+                €19.95
+              </p>
+              <p className="text-sm text-cream/80 font-semibold font-body mt-1">
+                {copy.stat}
+              </p>
             </div>
 
             {/* Gold border accent */}

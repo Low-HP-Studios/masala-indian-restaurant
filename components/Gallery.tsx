@@ -17,7 +17,6 @@ export default function Gallery({ copy, images }: Props) {
   return (
     <section id="preview" className="bg-page py-24 lg:py-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-
         {/* Header */}
         <RevealOnScroll className="text-center mb-16">
           <p className="section-label mb-4">{copy.eyebrow}</p>
@@ -55,19 +54,17 @@ export default function Gallery({ copy, images }: Props) {
                 alt={img.label}
                 fill
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                sizes={
-                  img.featured
-                    ? "(max-width: 1024px) 100vw, 66vw"
-                    : "(max-width: 1024px) 50vw, 33vw"
-                }
+                sizes={img.featured
+                  ? "(max-width: 1024px) 100vw, 66vw"
+                  : "(max-width: 1024px) 50vw, 33vw"}
                 skeletonClassName="bg-line/40"
               />
 
               {/* Always-on soft vignette at bottom */}
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-ink/40 via-transparent to-transparent" />
 
               {/* Hover: rich overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-maroon-dark/85 via-maroon/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-linear-to-t from-maroon-dark/85 via-maroon/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
               {/* Label — slides up on hover */}
               <div className="absolute bottom-0 left-0 right-0 p-4 lg:p-5 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
@@ -78,7 +75,9 @@ export default function Gallery({ copy, images }: Props) {
                 >
                   {img.label}
                 </p>
-                <p className="text-cream/70 text-xs mt-0.5 tracking-wide">{img.sub}</p>
+                <p className="text-cream/70 text-xs mt-0.5 tracking-wide">
+                  {img.sub}
+                </p>
               </div>
 
               {/* Gold inset border */}
@@ -101,12 +100,14 @@ export default function Gallery({ copy, images }: Props) {
             &quot;Every table holds a story. Every dish, a memory.&quot;
           </blockquote>
           <div className="mt-8">
-            <Link href="/en/menu" className="masala-btn masala-btn-filled px-8 py-3">
+            <Link
+              href="/en/menu"
+              className="masala-btn masala-btn-filled px-8 py-3"
+            >
               Explore Our Menu
             </Link>
           </div>
         </RevealOnScroll>
-
       </div>
     </section>
   );

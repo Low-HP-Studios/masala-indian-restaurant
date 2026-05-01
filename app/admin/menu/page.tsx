@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState } from "react";
-import { useQuery, useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { type Id } from "@/convex/_generated/dataModel";
 import { Badge } from "@/components/ui/badge";
@@ -121,11 +121,9 @@ function CategoryRow({
           </span>
           <Badge
             variant="secondary"
-            className={
-              content?.status === "published"
-                ? "bg-green-900/40 text-green-400 border-green-800 text-xs"
-                : "bg-zinc-800 text-zinc-500 border-zinc-700 text-xs"
-            }
+            className={content?.status === "published"
+              ? "bg-green-900/40 text-green-400 border-green-800 text-xs"
+              : "bg-zinc-800 text-zinc-500 border-zinc-700 text-xs"}
           >
             {content?.status ?? "-"}
           </Badge>
@@ -173,7 +171,7 @@ function MenuItemEditor({
       PROTEINS.map((protein) => [
         protein,
         formatPrice(priceByProtein[protein]),
-      ])
+      ]),
     ) as Record<Protein, string>,
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -235,16 +233,15 @@ function MenuItemEditor({
         categoryId,
         slug: baseFields.slug.trim(),
         order: Number(baseFields.order) || 0,
-        priceFixed:
-          baseFields.priceMode === "fixed"
-            ? parseOptionalNumber(baseFields.priceFixed)
-            : undefined,
-        priceByProtein:
-          baseFields.priceMode === "protein" ? buildPriceByProtein() : undefined,
-        spiceLevel:
-          baseFields.spiceLevel === "none"
-            ? undefined
-            : (Number(baseFields.spiceLevel) as 0 | 1 | 2 | 3 | 4),
+        priceFixed: baseFields.priceMode === "fixed"
+          ? parseOptionalNumber(baseFields.priceFixed)
+          : undefined,
+        priceByProtein: baseFields.priceMode === "protein"
+          ? buildPriceByProtein()
+          : undefined,
+        spiceLevel: baseFields.spiceLevel === "none"
+          ? undefined
+          : (Number(baseFields.spiceLevel) as 0 | 1 | 2 | 3 | 4),
         isVegetarian: baseFields.isVegetarian,
         isChefSpecial: baseFields.isChefSpecial,
         image: baseFields.image.trim() || undefined,
@@ -260,7 +257,9 @@ function MenuItemEditor({
         note: contentFields.note.trim() || undefined,
       });
 
-      toast.success(status === "published" ? "Item published" : "Item saved as draft");
+      toast.success(
+        status === "published" ? "Item published" : "Item saved as draft",
+      );
       onCreated?.();
     } catch (error: any) {
       toast.error(error?.message ?? "Failed to save item");
@@ -285,11 +284,9 @@ function MenuItemEditor({
         </div>
         <Badge
           variant="secondary"
-          className={
-            status === "published"
-              ? "bg-green-900/40 text-green-400 border-green-800 text-xs"
-              : "bg-zinc-800 text-zinc-500 border-zinc-700 text-xs"
-          }
+          className={status === "published"
+            ? "bg-green-900/40 text-green-400 border-green-800 text-xs"
+            : "bg-zinc-800 text-zinc-500 border-zinc-700 text-xs"}
         >
           {status}
         </Badge>
@@ -298,14 +295,14 @@ function MenuItemEditor({
       <div className="grid gap-4 sm:grid-cols-[96px_minmax(0,1fr)]">
         <div className="space-y-2">
           <div className="aspect-square overflow-hidden rounded-md border border-zinc-700 bg-zinc-900 flex items-center justify-center">
-            {preview ? (
-              <div
-                className="h-full w-full bg-cover bg-center"
-                style={{ backgroundImage: `url("${preview}")` }}
-              />
-            ) : (
-              <ImagePlus className="size-6 text-zinc-600" />
-            )}
+            {preview
+              ? (
+                <div
+                  className="h-full w-full bg-cover bg-center"
+                  style={{ backgroundImage: `url("${preview}")` }}
+                />
+              )
+              : <ImagePlus className="size-6 text-zinc-600" />}
           </div>
           <Label className="flex h-8 cursor-pointer items-center justify-center gap-1 rounded-md border border-zinc-700 text-[11px] text-zinc-300 hover:bg-zinc-800">
             <Upload className="size-3" />
@@ -379,7 +376,8 @@ function MenuItemEditor({
             <Label className="text-zinc-400 text-xs">Description</Label>
             <Textarea
               value={contentFields.description}
-              onChange={(event) => setContent("description")(event.target.value)}
+              onChange={(event) =>
+                setContent("description")(event.target.value)}
               className="bg-zinc-800 border-zinc-700 text-white text-sm min-h-[60px] resize-none"
             />
           </div>
@@ -423,43 +421,45 @@ function MenuItemEditor({
               </Button>
             </div>
 
-            {baseFields.priceMode === "fixed" ? (
-              <div className="space-y-1">
-                <Label className="text-zinc-400 text-xs">Price</Label>
-                <Input
-                  type="number"
-                  step="0.01"
-                  value={baseFields.priceFixed}
-                  onChange={(event) => setBase("priceFixed", event.target.value)}
-                  className="bg-zinc-800 border-zinc-700 text-white h-8 text-sm"
-                />
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4">
-                {PROTEINS.map((protein) => (
-                  <div key={protein} className="space-y-1">
-                    <Label className="text-zinc-400 text-xs capitalize">
-                      {protein}
-                    </Label>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      value={baseFields.proteinPrices[protein]}
-                      onChange={(event) =>
-                        setBaseFields((fields) => ({
-                          ...fields,
-                          proteinPrices: {
-                            ...fields.proteinPrices,
-                            [protein]: event.target.value,
-                          },
-                        }))
-                      }
-                      className="bg-zinc-800 border-zinc-700 text-white h-8 text-sm"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+            {baseFields.priceMode === "fixed"
+              ? (
+                <div className="space-y-1">
+                  <Label className="text-zinc-400 text-xs">Price</Label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={baseFields.priceFixed}
+                    onChange={(event) =>
+                      setBase("priceFixed", event.target.value)}
+                    className="bg-zinc-800 border-zinc-700 text-white h-8 text-sm"
+                  />
+                </div>
+              )
+              : (
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4">
+                  {PROTEINS.map((protein) => (
+                    <div key={protein} className="space-y-1">
+                      <Label className="text-zinc-400 text-xs capitalize">
+                        {protein}
+                      </Label>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        value={baseFields.proteinPrices[protein]}
+                        onChange={(event) =>
+                          setBaseFields((fields) => ({
+                            ...fields,
+                            proteinPrices: {
+                              ...fields.proteinPrices,
+                              [protein]: event.target.value,
+                            },
+                          }))}
+                        className="bg-zinc-800 border-zinc-700 text-white h-8 text-sm"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
@@ -467,7 +467,8 @@ function MenuItemEditor({
               <input
                 type="checkbox"
                 checked={baseFields.isVegetarian}
-                onChange={(event) => setBase("isVegetarian", event.target.checked)}
+                onChange={(event) =>
+                  setBase("isVegetarian", event.target.checked)}
                 className="size-4 accent-green-700"
               />
               Vegetarian
@@ -476,7 +477,8 @@ function MenuItemEditor({
               <input
                 type="checkbox"
                 checked={baseFields.isChefSpecial}
-                onChange={(event) => setBase("isChefSpecial", event.target.checked)}
+                onChange={(event) =>
+                  setBase("isChefSpecial", event.target.checked)}
                 className="size-4 accent-amber-600"
               />
               Chef special
@@ -540,14 +542,23 @@ function CategoryDetail({
         <div className="mt-8 space-y-3">
           <Skeleton className="h-8 w-40 rounded-md bg-zinc-800/80" />
           {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={i} className="h-28 w-full rounded-lg bg-zinc-800/85" />
+            <Skeleton
+              key={i}
+              className="h-28 w-full rounded-lg bg-zinc-800/85"
+            />
           ))}
         </div>
       </div>
     );
   }
 
-  return <CategoryDetailLoaded categoryId={categoryId} locale={locale} catData={catData} />;
+  return (
+    <CategoryDetailLoaded
+      categoryId={categoryId}
+      locale={locale}
+      catData={catData}
+    />
+  );
 }
 
 function CategoryDetailLoaded({
@@ -557,7 +568,9 @@ function CategoryDetailLoaded({
 }: {
   categoryId: Id<"menuCategories">;
   locale: Locale;
-  catData: NonNullable<ReturnType<typeof useQuery<typeof api.menu.getCategoryWithContent>>>;
+  catData: NonNullable<
+    ReturnType<typeof useQuery<typeof api.menu.getCategoryWithContent>>
+  >;
 }) {
   const upsertCatContent = useMutation(api.admin.upsertMenuCategoryContent);
   const upsertCategory = useMutation(api.admin.upsertMenuCategory);
@@ -642,15 +655,15 @@ function CategoryDetailLoaded({
         </div>
 
         <div className="grid gap-4 sm:grid-cols-[160px_minmax(0,1fr)]">
-          <div className="aspect-[4/3] overflow-hidden rounded-md border border-zinc-700 bg-zinc-900 flex items-center justify-center">
-            {bannerSrc ? (
-              <div
-                className="h-full w-full bg-cover bg-center"
-                style={{ backgroundImage: `url("${bannerSrc}")` }}
-              />
-            ) : (
-              <ImagePlus className="size-7 text-zinc-600" />
-            )}
+          <div className="aspect-4/3 overflow-hidden rounded-md border border-zinc-700 bg-zinc-900 flex items-center justify-center">
+            {bannerSrc
+              ? (
+                <div
+                  className="h-full w-full bg-cover bg-center"
+                  style={{ backgroundImage: `url("${bannerSrc}")` }}
+                />
+              )
+              : <ImagePlus className="size-7 text-zinc-600" />}
           </div>
 
           <div className="space-y-3">
@@ -664,8 +677,7 @@ function CategoryDetailLoaded({
                   setBannerFields((fields) => ({
                     ...fields,
                     bannerImage: event.target.value,
-                  }))
-                }
+                  }))}
                 placeholder="/images/menu-image/butter-chicken.png"
                 className="bg-zinc-800 border-zinc-700 text-white"
               />
@@ -706,11 +718,9 @@ function CategoryDetailLoaded({
           <h3 className="text-sm font-medium text-white">Category Content</h3>
           <Badge
             variant="secondary"
-            className={
-              content?.status === "published"
-                ? "bg-green-900/40 text-green-400 border-green-800"
-                : "bg-zinc-800 text-zinc-500 border-zinc-700"
-            }
+            className={content?.status === "published"
+              ? "bg-green-900/40 text-green-400 border-green-800"
+              : "bg-zinc-800 text-zinc-500 border-zinc-700"}
           >
             {content?.status ?? "no data"}
           </Badge>
@@ -718,18 +728,24 @@ function CategoryDetailLoaded({
 
         <div className="space-y-3">
           <div className="space-y-1.5">
-            <Label className="text-zinc-300 text-xs uppercase tracking-wide">Label</Label>
+            <Label className="text-zinc-300 text-xs uppercase tracking-wide">
+              Label
+            </Label>
             <Input
               value={catFields.label}
-              onChange={(e) => setCatFields((f) => ({ ...f, label: e.target.value }))}
+              onChange={(e) =>
+                setCatFields((f) => ({ ...f, label: e.target.value }))}
               className="bg-zinc-800 border-zinc-700 text-white"
             />
           </div>
           <div className="space-y-1.5">
-            <Label className="text-zinc-300 text-xs uppercase tracking-wide">Description</Label>
+            <Label className="text-zinc-300 text-xs uppercase tracking-wide">
+              Description
+            </Label>
             <Textarea
               value={catFields.description}
-              onChange={(e) => setCatFields((f) => ({ ...f, description: e.target.value }))}
+              onChange={(e) =>
+                setCatFields((f) => ({ ...f, description: e.target.value }))}
               className="bg-zinc-800 border-zinc-700 text-white resize-none min-h-[70px]"
             />
           </div>
@@ -793,7 +809,9 @@ function CategoryDetailLoaded({
 
 export default function MenuAdminPage() {
   const [locale, setLocale] = useState<Locale>("en");
-  const [selectedId, setSelectedId] = useState<Id<"menuCategories"> | null>(null);
+  const [selectedId, setSelectedId] = useState<Id<"menuCategories"> | null>(
+    null,
+  );
   const categories = useQuery(api.menu.getAllCategoriesAdmin);
 
   return (
@@ -802,8 +820,12 @@ export default function MenuAdminPage() {
       <div className="flex h-full min-h-0 flex-col overflow-hidden">
         <div className="z-20 shrink-0 border-b border-zinc-800 bg-zinc-900/95 px-4 py-4 backdrop-blur sm:px-6 lg:px-8 lg:pt-8 lg:pb-6">
           <div className="mb-4 sm:mb-6">
-            <p className="text-xs text-zinc-500 uppercase tracking-widest mb-1">Menu</p>
-            <h1 className="text-xl font-semibold text-white">Categories & Items</h1>
+            <p className="text-xs text-zinc-500 uppercase tracking-widest mb-1">
+              Menu
+            </p>
+            <h1 className="text-xl font-semibold text-white">
+              Categories & Items
+            </h1>
           </div>
 
           <Tabs value={locale} onValueChange={(v) => setLocale(v as Locale)}>
@@ -821,29 +843,53 @@ export default function MenuAdminPage() {
           </Tabs>
         </div>
 
-        {!categories ? (
-          <div className="no-scrollbar grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 sm:gap-6 sm:p-6 lg:p-8 xl:grid-cols-[280px_minmax(0,1fr)] xl:overflow-hidden">
-            <div className="no-scrollbar min-h-0 space-y-2 overflow-y-auto overscroll-contain pr-1">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <Skeleton key={i} className="h-24 w-full rounded-lg bg-zinc-800/95" />
-              ))}
-            </div>
-            <div className="no-scrollbar hidden min-h-0 flex-col gap-4 overflow-y-auto overscroll-contain xl:flex">
-              <Skeleton className="h-12 w-full max-w-xl rounded-lg bg-zinc-800/80" />
-              <Skeleton className="h-56 w-full max-w-md rounded-lg bg-zinc-800/70" />
-              <div className="grid gap-3 sm:grid-cols-2">
-                <Skeleton className="h-40 rounded-lg bg-zinc-800/60" />
-                <Skeleton className="h-40 rounded-lg bg-zinc-800/60" />
+        {!categories
+          ? (
+            <div className="no-scrollbar grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 sm:gap-6 sm:p-6 lg:p-8 xl:grid-cols-[280px_minmax(0,1fr)] xl:overflow-hidden">
+              <div className="no-scrollbar min-h-0 space-y-2 overflow-y-auto overscroll-contain pr-1">
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <Skeleton
+                    key={i}
+                    className="h-24 w-full rounded-lg bg-zinc-800/95"
+                  />
+                ))}
+              </div>
+              <div className="no-scrollbar hidden min-h-0 flex-col gap-4 overflow-y-auto overscroll-contain xl:flex">
+                <Skeleton className="h-12 w-full max-w-xl rounded-lg bg-zinc-800/80" />
+                <Skeleton className="h-56 w-full max-w-md rounded-lg bg-zinc-800/70" />
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Skeleton className="h-40 rounded-lg bg-zinc-800/60" />
+                  <Skeleton className="h-40 rounded-lg bg-zinc-800/60" />
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <>
-            {selectedId && (
-              <div className="z-10 shrink-0 border-b border-zinc-800 bg-zinc-900/95 backdrop-blur xl:hidden">
-                <div className="no-scrollbar flex gap-2 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
+          )
+          : (
+            <>
+              {selectedId && (
+                <div className="z-10 shrink-0 border-b border-zinc-800 bg-zinc-900/95 backdrop-blur xl:hidden">
+                  <div className="no-scrollbar flex gap-2 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
+                    {categories.map((cat: any) => (
+                      <CategoryPill
+                        key={cat._id}
+                        category={cat}
+                        locale={locale}
+                        selected={selectedId === cat._id}
+                        onSelect={() => setSelectedId(cat._id)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="no-scrollbar grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 sm:gap-6 sm:p-6 lg:p-8 xl:grid-cols-[280px_minmax(0,1fr)] xl:grid-rows-[minmax(0,1fr)] xl:overflow-hidden">
+                <div
+                  className={`no-scrollbar min-h-0 min-w-0 space-y-2 overflow-y-auto overscroll-contain pr-1 xl:block xl:max-h-none ${
+                    selectedId ? "hidden xl:block" : "max-h-[60vh]"
+                  }`}
+                >
                   {categories.map((cat: any) => (
-                    <CategoryPill
+                    <CategoryRow
                       key={cat._id}
                       category={cat}
                       locale={locale}
@@ -852,42 +898,25 @@ export default function MenuAdminPage() {
                     />
                   ))}
                 </div>
-              </div>
-            )}
 
-            <div className="no-scrollbar grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 sm:gap-6 sm:p-6 lg:p-8 xl:grid-cols-[280px_minmax(0,1fr)] xl:grid-rows-[minmax(0,1fr)] xl:overflow-hidden">
-              <div
-                className={`no-scrollbar min-h-0 min-w-0 space-y-2 overflow-y-auto overscroll-contain pr-1 xl:block xl:max-h-none ${
-                  selectedId ? "hidden xl:block" : "max-h-[60vh]"
-                }`}
-              >
-                {categories.map((cat: any) => (
-                  <CategoryRow
-                    key={cat._id}
-                    category={cat}
-                    locale={locale}
-                    selected={selectedId === cat._id}
-                    onSelect={() => setSelectedId(cat._id)}
-                  />
-                ))}
+                <div className="no-scrollbar min-h-0 min-w-0 xl:overflow-y-auto xl:overscroll-contain">
+                  {selectedId
+                    ? (
+                      <CategoryDetail
+                        key={`${selectedId}-${locale}`}
+                        categoryId={selectedId}
+                        locale={locale}
+                      />
+                    )
+                    : (
+                      <div className="flex items-center justify-center h-40 text-zinc-500 text-sm">
+                        Select a category to edit
+                      </div>
+                    )}
+                </div>
               </div>
-
-              <div className="no-scrollbar min-h-0 min-w-0 xl:overflow-y-auto xl:overscroll-contain">
-                {selectedId ? (
-                  <CategoryDetail
-                    key={`${selectedId}-${locale}`}
-                    categoryId={selectedId}
-                    locale={locale}
-                  />
-                ) : (
-                  <div className="flex items-center justify-center h-40 text-zinc-500 text-sm">
-                    Select a category to edit
-                  </div>
-                )}
-              </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
       </div>
     </>
   );
