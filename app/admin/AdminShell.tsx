@@ -15,9 +15,50 @@ import { useAuthActions } from "@convex-dev/auth/react";
 import { api } from "@/convex/_generated/api";
 import { formatRelativeTime } from "./sections/[section]/_components/diff";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { LogOut, Menu, X } from "lucide-react";
 
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+
+function AdminAuthLoadingSkeleton() {
+  return (
+    <div className="fixed inset-0 z-50 flex overflow-hidden bg-zinc-900 text-white">
+      <div className="fixed inset-y-0 left-0 z-40 hidden lg:block">
+        <aside className="flex h-full w-64 flex-col border-r border-zinc-800 bg-zinc-950 px-6 py-5">
+          <Skeleton className="h-3 w-20 rounded bg-zinc-800" />
+          <Skeleton className="mt-2 h-5 w-16 rounded bg-zinc-700" />
+          <div className="mt-8 space-y-2">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <Skeleton key={i} className="h-9 w-full rounded-md bg-zinc-800/90" />
+            ))}
+          </div>
+        </aside>
+      </div>
+
+      <header className="fixed inset-x-0 top-0 z-40 flex h-14 items-center gap-3 border-b border-zinc-800 bg-zinc-950/95 px-4 backdrop-blur lg:hidden">
+        <Skeleton className="size-9 shrink-0 rounded-md bg-zinc-800" />
+        <div className="min-w-0 flex-1 space-y-1.5">
+          <Skeleton className="h-2.5 w-16 rounded bg-zinc-700" />
+          <Skeleton className="h-4 w-24 rounded bg-zinc-600" />
+        </div>
+      </header>
+
+      <main className="h-full min-w-0 flex-1 overflow-hidden pt-14 lg:ml-64 lg:pt-0">
+        <div className="h-full space-y-4 overflow-y-auto p-4 sm:p-6 lg:p-8">
+          <Skeleton className="h-7 w-48 rounded-md bg-zinc-800 sm:h-8 sm:w-56" />
+          <Skeleton className="h-4 w-full max-w-md rounded-md bg-zinc-800/70" />
+          <Skeleton className="h-4 w-52 rounded-md bg-zinc-800/50" />
+          <div className="grid gap-3 pt-4 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-28 rounded-lg bg-zinc-800/90" />
+            ))}
+          </div>
+          <Skeleton className="mx-auto mt-8 h-40 w-full max-w-2xl rounded-lg bg-zinc-800/60" />
+        </div>
+      </main>
+    </div>
+  );
+}
 
 const SECTIONS = [
   { key: "navbar", label: "Navbar" },
@@ -184,9 +225,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       ) : (
         <>
           <AuthLoading>
-            <div className="grid min-h-screen place-items-center bg-zinc-950 text-sm text-zinc-400">
-              Loading admin...
-            </div>
+            <AdminAuthLoadingSkeleton />
           </AuthLoading>
           <Unauthenticated>
             <div className="grid min-h-screen place-items-center bg-zinc-950 text-sm text-zinc-400">

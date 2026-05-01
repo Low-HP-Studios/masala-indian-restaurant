@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SkeletonImage } from "@/components/SkeletonImage";
 import MotionLift from "./MotionLift";
 import RevealOnScroll from "./RevealOnScroll";
 import type { SiteDictionary } from "@/lib/i18n";
@@ -50,13 +50,13 @@ export default function FeaturedDishes({ copy }: Props) {
               <MotionLift>
                 {/* Image */}
                 <div className="relative w-full aspect-3/4 overflow-hidden mb-6 shadow-lg">
-                  <Image
+                  <SkeletonImage
                     src={dish.image}
                     alt={dish.name}
-                    width={600}
-                    height={800}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.08]"
                     sizes="(max-width: 768px) 100vw, 33vw"
+                    skeletonClassName="bg-cream-dark/40"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-dark/60 to-transparent" />
 

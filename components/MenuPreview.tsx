@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SkeletonImage } from "@/components/SkeletonImage";
 import MotionLift from "./MotionLift";
 import MotionPressable from "./MotionPressable";
 import RevealOnScroll from "./RevealOnScroll";
@@ -38,13 +38,13 @@ export default function MenuPreview({ locale, copy }: Props) {
                   href={localizePath(locale, `/menu#${cat.id}`)}
                   className="group relative block w-full aspect-[3/4] overflow-hidden"
                 >
-                  <Image
+                  <SkeletonImage
                     src={cat.image}
                     alt={cat.label}
-                    width={600}
-                    height={800}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                     sizes="(max-width: 768px) 50vw, 25vw"
+                    skeletonClassName="bg-zinc-800"
                   />
                   {/* Gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent transition-opacity duration-300 group-hover:from-maroon/80" />

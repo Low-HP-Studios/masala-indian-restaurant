@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SkeletonImage } from "@/components/SkeletonImage";
 import type { CSSProperties } from "react";
 import MotionPressable from "./MotionPressable";
 import RevealOnScroll from "./RevealOnScroll";
@@ -63,12 +63,13 @@ export default function Story({ locale, copy, image }: Props) {
           <RevealOnScroll delay={2} className="relative">
             {/* Main image */}
             <div className="relative aspect-[4/5] rounded-sm overflow-hidden shadow-2xl">
-              <Image
+              <SkeletonImage
                 src={image.src}
                 alt={image.alt}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
+                skeletonClassName="bg-line/50"
               />
               {/* Warm overlay */}
               <div className="absolute inset-0 bg-saffron/5" />

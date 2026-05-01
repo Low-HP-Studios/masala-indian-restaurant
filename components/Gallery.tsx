@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SkeletonImage } from "@/components/SkeletonImage";
 import Link from "next/link";
 import RevealOnScroll from "./RevealOnScroll";
 import type { SiteDictionary } from "@/lib/i18n";
@@ -50,7 +50,7 @@ export default function Gallery({ copy, images }: Props) {
                   : ""
               }`}
             >
-              <Image
+              <SkeletonImage
                 src={img.src}
                 alt={img.label}
                 fill
@@ -60,6 +60,7 @@ export default function Gallery({ copy, images }: Props) {
                     ? "(max-width: 1024px) 100vw, 66vw"
                     : "(max-width: 1024px) 50vw, 33vw"
                 }
+                skeletonClassName="bg-line/40"
               />
 
               {/* Always-on soft vignette at bottom */}

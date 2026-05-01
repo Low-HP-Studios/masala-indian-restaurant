@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Select,
   SelectContent,
@@ -529,8 +530,19 @@ function CategoryDetail({
 
   if (!catData) {
     return (
-      <div className="flex items-center justify-center h-32">
-        <div className="w-5 h-5 border-2 border-zinc-600 border-t-zinc-400 rounded-full animate-spin" />
+      <div className="no-scrollbar flex min-h-[40vh] flex-col gap-4 overflow-y-auto py-3 sm:p-6 lg:p-8">
+        <Skeleton className="h-44 w-full max-w-lg rounded-xl bg-zinc-800/90" />
+        <div className="grid gap-3 sm:max-w-xl">
+          <Skeleton className="h-11 w-full rounded-md bg-zinc-800" />
+          <Skeleton className="h-24 w-full rounded-md bg-zinc-800" />
+          <Skeleton className="h-11 w-full rounded-md bg-zinc-800" />
+        </div>
+        <div className="mt-8 space-y-3">
+          <Skeleton className="h-8 w-40 rounded-md bg-zinc-800/80" />
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Skeleton key={i} className="h-28 w-full rounded-lg bg-zinc-800/85" />
+          ))}
+        </div>
       </div>
     );
   }
@@ -810,8 +822,20 @@ export default function MenuAdminPage() {
         </div>
 
         {!categories ? (
-          <div className="flex min-h-0 flex-1 items-center justify-center">
-            <div className="w-5 h-5 border-2 border-zinc-600 border-t-zinc-400 rounded-full animate-spin" />
+          <div className="no-scrollbar grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 sm:gap-6 sm:p-6 lg:p-8 xl:grid-cols-[280px_minmax(0,1fr)] xl:overflow-hidden">
+            <div className="no-scrollbar min-h-0 space-y-2 overflow-y-auto overscroll-contain pr-1">
+              {Array.from({ length: 10 }).map((_, i) => (
+                <Skeleton key={i} className="h-24 w-full rounded-lg bg-zinc-800/95" />
+              ))}
+            </div>
+            <div className="no-scrollbar hidden min-h-0 flex-col gap-4 overflow-y-auto overscroll-contain xl:flex">
+              <Skeleton className="h-12 w-full max-w-xl rounded-lg bg-zinc-800/80" />
+              <Skeleton className="h-56 w-full max-w-md rounded-lg bg-zinc-800/70" />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Skeleton className="h-40 rounded-lg bg-zinc-800/60" />
+                <Skeleton className="h-40 rounded-lg bg-zinc-800/60" />
+              </div>
+            </div>
           </div>
         ) : (
           <>

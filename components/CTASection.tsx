@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SkeletonImage } from "@/components/SkeletonImage";
 import MotionPressable from "./MotionPressable";
 import RevealOnScroll from "./RevealOnScroll";
 import type { SiteDictionary } from "@/lib/i18n";
@@ -16,14 +16,17 @@ export default function CTASection({ copy, backgroundImage }: Props) {
   return (
     <section id="contact" className="relative py-28 lg:py-36 overflow-hidden">
       {/* Background */}
-      <Image
-        src={backgroundImage.src}
-        alt={backgroundImage.alt}
-        fill
-        className="object-cover"
-        style={{ objectPosition: backgroundImage.position ?? "center" }}
-        sizes="100vw"
-      />
+      <div className="absolute inset-0 z-0">
+        <SkeletonImage
+          src={backgroundImage.src}
+          alt={backgroundImage.alt}
+          fill
+          className="object-cover"
+          style={{ objectPosition: backgroundImage.position ?? "center" }}
+          sizes="100vw"
+          skeletonClassName="bg-maroon-dark/80"
+        />
+      </div>
       <div className="absolute inset-0 bg-maroon/85" />
 
       {/* Hindi watermark */}

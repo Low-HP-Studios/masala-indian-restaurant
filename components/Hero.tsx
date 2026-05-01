@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { SkeletonImage } from "@/components/SkeletonImage";
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
@@ -83,7 +83,7 @@ export default function Hero({ locale, copy, slides }: Props) {
             zIndex: i === current ? 1 : i === prev ? 0 : -1,
           }}
         >
-          <Image
+          <SkeletonImage
             src={slide.src}
             alt={slide.alt}
             fill
@@ -91,6 +91,7 @@ export default function Hero({ locale, copy, slides }: Props) {
             className="object-cover"
             style={{ objectPosition: slide.position }}
             sizes="100vw"
+            skeletonClassName="bg-zinc-900"
           />
         </motion.div>
       ))}

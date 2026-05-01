@@ -7,12 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-type Mode = "signIn" | "signUp";
-
 export default function AdminLoginPage() {
   const searchParams = useSearchParams();
   const { signIn } = useAuthActions();
-  const [mode, setMode] = useState<Mode>("signIn");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +27,7 @@ export default function AdminLoginPage() {
 
     try {
       await signIn("password", {
-        flow: mode,
+        flow: "signIn",
         email,
         password,
       });
@@ -57,25 +54,6 @@ export default function AdminLoginPage() {
           </h1>
         </div>
 
-        <div className="mb-5 grid grid-cols-2 rounded-md border border-zinc-800 bg-zinc-950 p-1">
-          <Button
-            type="button"
-            variant={mode === "signIn" ? "secondary" : "ghost"}
-            size="sm"
-            onClick={() => setMode("signIn")}
-          >
-            Sign in
-          </Button>
-          <Button
-            type="button"
-            variant={mode === "signUp" ? "secondary" : "ghost"}
-            size="sm"
-            onClick={() => setMode("signUp")}
-          >
-            Create
-          </Button>
-        </div>
-
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -94,9 +72,7 @@ export default function AdminLoginPage() {
             <Input
               id="password"
               type="password"
-              autoComplete={
-                mode === "signIn" ? "current-password" : "new-password"
-              }
+              autoComplete="current-password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               required
@@ -117,11 +93,7 @@ export default function AdminLoginPage() {
           disabled={isSubmitting}
           className="mt-6 w-full"
         >
-          {isSubmitting
-            ? "Working..."
-            : mode === "signIn"
-              ? "Sign in"
-              : "Create admin"}
+          {isSubmitting ? "Working..." : "Sign in"}
         </Button>
       </form>
     </main>

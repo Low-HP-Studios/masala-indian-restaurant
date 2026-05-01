@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/sonner";
 import { FieldLabel } from "./_components/FieldLabel";
 import { VersionPanel } from "./_components/VersionPanel";
@@ -507,8 +508,21 @@ export default function SectionPage({
         </header>
 
         {allData === undefined ? (
-          <div className="flex items-center justify-center h-32">
-            <div className="w-5 h-5 border-2 border-zinc-600 border-t-zinc-400 rounded-full animate-spin" />
+          <div className="flex min-h-0 flex-1 flex-col xl:flex-row">
+            <main className="no-scrollbar min-h-0 flex-1 space-y-5 overflow-y-auto p-4 sm:p-6 lg:p-8">
+              <Skeleton className="h-10 w-full max-w-lg rounded-md bg-zinc-800" />
+              <Skeleton className="h-10 w-full rounded-md bg-zinc-800" />
+              <Skeleton className="h-10 w-full max-w-xl rounded-md bg-zinc-800" />
+              <Skeleton className="h-36 w-full rounded-md bg-zinc-800/80" />
+              <Skeleton className="h-32 w-full max-w-lg rounded-md bg-zinc-800/70" />
+            </main>
+            <aside className="no-scrollbar shrink-0 border-t border-zinc-800 bg-zinc-950/80 p-4 xl:flex xl:h-full xl:w-[min(440px,40vw)] xl:flex-col xl:overflow-y-auto xl:border-l xl:border-t-0 xl:p-6">
+              <Skeleton className="h-44 w-full rounded-lg bg-zinc-800/90" />
+              <div className="mt-6 space-y-3">
+                <Skeleton className="h-11 w-full rounded-md bg-zinc-800" />
+                <Skeleton className="h-11 w-full rounded-md bg-zinc-800" />
+              </div>
+            </aside>
           </div>
         ) : (
           <SectionWorkspace
