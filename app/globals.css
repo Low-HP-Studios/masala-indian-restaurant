@@ -1,4 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans+Flex:ital,opsz,wdth,wght,GRAD@0,8,100,400..1000,0&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-cream: var(--cream);
@@ -19,8 +24,46 @@
   --color-ink-muted: var(--ink-muted);
   --color-line: var(--line);
 
-  --font-heading: var(--font-marcellus), Marcellus, Georgia, serif;
+  --font-heading: "Google Sans Flex", "Helvetica Neue", system-ui, sans-serif;
   --font-body: "Google Sans Flex", "Helvetica Neue", system-ui, sans-serif;
+  --font-sans: "Google Sans Flex", "Helvetica Neue", system-ui, sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 :root {
@@ -35,7 +78,7 @@
   --gold: #c9973c;
   --gold-light: #e7be62;
   --dark: #140c07;
-  --muted: #725f52;
+  --muted: oklch(0.97 0 0);
   --page: #fbf4e6;
   --surface: #fff9ed;
   --surface-soft: #efe1c4;
@@ -44,6 +87,37 @@
   --line: rgba(26, 15, 5, 0.14);
   --ambient-accent: #d97706;
   --lowhp-accent: #7df9c5;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -113,6 +187,14 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 ::view-transition-group(site-header) {
@@ -579,27 +661,16 @@ main section[id] {
 .section-skin {
   position: relative;
   isolation: isolate;
-  border-radius: 1.25rem;
-  overflow: hidden;
-  padding: 1.75rem 1.25rem 2rem;
-  border: 1px solid color-mix(in srgb, var(--gold) 22%, transparent);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, var(--cream) 60%, transparent) inset,
-    0 14px 36px -22px rgba(60, 30, 5, 0.22);
+  overflow: visible;
+  padding: 1.5rem 0.25rem 2rem;
+  border: none;
+  box-shadow: none;
 }
 
 @media (min-width: 640px) {
   .section-skin {
-    padding: 2.25rem 2rem 2.5rem;
-    border-radius: 1.5rem;
+    padding: 2rem 0.5rem 2.5rem;
   }
-}
-
-.section-skin > .section-skin__motif {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
 }
 
 .section-skin > * {
@@ -607,53 +678,33 @@ main section[id] {
   z-index: 1;
 }
 
-.section-skin > .section-skin__motif {
-  z-index: 0;
-}
-
-.section-skin__corner {
+/* Atmosphere layer — masked on all four sides so adjacent sections dissolve into each other */
+.section-skin > .section-skin__bg {
   position: absolute;
-  width: clamp(120px, 22%, 220px);
-  aspect-ratio: 1;
-  background-repeat: no-repeat;
-  background-size: contain;
+  inset: 0;
+  z-index: -1;
   pointer-events: none;
-  opacity: 0.18;
+  -webkit-mask-image:
+    linear-gradient(180deg, transparent 0, #000 1.25rem, #000 calc(100% - 1.5rem), transparent 100%),
+    linear-gradient(90deg, transparent 0, #000 1.25rem, #000 calc(100% - 1.25rem), transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image:
+    linear-gradient(180deg, transparent 0, #000 1.25rem, #000 calc(100% - 1.5rem), transparent 100%),
+    linear-gradient(90deg, transparent 0, #000 1.25rem, #000 calc(100% - 1.25rem), transparent 100%);
+          mask-composite: intersect;
 }
 
-/* ----- Default skin (paisley corners on warm parchment) ----- */
-.section-skin--default {
+/* ----- Default skin ----- */
+.section-skin--default .section-skin__bg {
   background:
-    radial-gradient(ellipse at 0% 0%, color-mix(in srgb, var(--gold) 8%, transparent), transparent 55%),
-    radial-gradient(ellipse at 100% 100%, color-mix(in srgb, var(--saffron) 7%, transparent), transparent 55%),
-    linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, transparent), color-mix(in srgb, var(--surface) 86%, transparent));
-}
-
-.section-skin--default .section-skin__corner--tl {
-  top: -10px;
-  left: -10px;
-  background-image: url("/textures/paisley.svg");
-}
-
-.section-skin--default .section-skin__corner--br {
-  bottom: -10px;
-  right: -10px;
-  background-image: url("/textures/paisley.svg");
-  transform: scale(-1, -1);
+    radial-gradient(ellipse 80% 70% at 50% 50%, color-mix(in srgb, var(--gold) 6%, transparent), transparent 80%);
 }
 
 /* ----- Special skin (festive rangoli mandala + saffron glow) ----- */
-.section-skin--special {
+.section-skin--special .section-skin__bg {
   background:
-    radial-gradient(ellipse 60% 80% at 50% 50%, color-mix(in srgb, var(--saffron) 14%, transparent), transparent 70%),
-    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--gold) 18%, transparent), transparent 60%),
-    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--maroon) 10%, transparent), transparent 60%),
-    linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, var(--saffron) 4%) 0%, var(--surface) 100%);
-  border-color: color-mix(in srgb, var(--gold) 36%, transparent);
-  box-shadow:
-    0 1px 0 color-mix(in srgb, var(--cream) 70%, transparent) inset,
-    0 0 0 1px color-mix(in srgb, var(--gold) 14%, transparent) inset,
-    0 24px 60px -28px color-mix(in srgb, var(--saffron) 32%, transparent);
+    radial-gradient(ellipse 70% 60% at 50% 60%, color-mix(in srgb, var(--saffron) 10%, transparent), transparent 75%),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--maroon) 8%, transparent), transparent 65%);
 }
 
 .section-skin--special::before {
@@ -667,30 +718,19 @@ main section[id] {
   opacity: 0.18;
   z-index: 0;
   pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
 }
 
 .section-skin--special::after {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border: 1px solid color-mix(in srgb, var(--gold) 28%, transparent);
-  border-radius: calc(1.5rem - 12px);
-  pointer-events: none;
-  z-index: 0;
+  content: none;
 }
 
 /* ----- Tandoori skin (smoky charcoal + radiating embers) ----- */
-.section-skin--tandoori {
+.section-skin--tandoori .section-skin__bg {
   background:
-    radial-gradient(ellipse 90% 60% at 50% 100%, rgba(217, 119, 6, 0.18), transparent 60%),
-    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(111, 23, 23, 0.12), transparent 65%),
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--maroon) 6%, var(--surface)) 0%,
-      color-mix(in srgb, var(--saffron-dark) 6%, var(--surface)) 100%);
-  border-color: color-mix(in srgb, var(--maroon) 32%, transparent);
-  box-shadow:
-    0 1px 0 rgba(255, 220, 180, 0.4) inset,
-    0 24px 56px -28px rgba(111, 23, 23, 0.35);
+    radial-gradient(ellipse 90% 60% at 50% 100%, rgba(217, 119, 6, 0.14), transparent 65%),
+    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(111, 23, 23, 0.08), transparent 70%);
 }
 
 .section-skin--tandoori::before {
@@ -732,18 +772,10 @@ main section[id] {
 }
 
 /* ----- Biryani skin (saffron strands + warm rice glow) ----- */
-.section-skin--biryani {
+.section-skin--biryani .section-skin__bg {
   background:
-    radial-gradient(ellipse at 0% 0%, color-mix(in srgb, var(--gold-light) 22%, transparent), transparent 55%),
-    radial-gradient(ellipse at 100% 100%, color-mix(in srgb, var(--saffron) 16%, transparent), transparent 55%),
-    radial-gradient(ellipse at 50% 50%, color-mix(in srgb, var(--cream) 60%, transparent), transparent 80%),
-    linear-gradient(135deg,
-      color-mix(in srgb, var(--surface) 92%, var(--gold) 8%) 0%,
-      color-mix(in srgb, var(--surface) 88%, var(--saffron) 12%) 100%);
-  border-color: color-mix(in srgb, var(--gold) 34%, transparent);
-  box-shadow:
-    0 1px 0 rgba(255, 245, 220, 0.5) inset,
-    0 22px 50px -28px color-mix(in srgb, var(--saffron) 28%, transparent);
+    radial-gradient(ellipse 80% 70% at 50% 50%, color-mix(in srgb, var(--saffron) 10%, transparent), transparent 75%),
+    radial-gradient(ellipse 60% 50% at 50% 50%, color-mix(in srgb, var(--gold-light) 8%, transparent), transparent 80%);
 }
 
 .section-skin--biryani::before {
@@ -754,122 +786,39 @@ main section[id] {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  opacity: 0.18;
+  opacity: 0.14;
   pointer-events: none;
   z-index: 0;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
 }
 
 /* ----- Vegetarian skin (lotus leaves + fresh hint) ----- */
-.section-skin--veg {
+.section-skin--veg .section-skin__bg {
   background:
-    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, #6aa86a 10%, transparent), transparent 60%),
-    radial-gradient(ellipse at 100% 100%, color-mix(in srgb, var(--gold) 8%, transparent), transparent 55%),
-    linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, transparent), var(--surface));
-  border-color: color-mix(in srgb, #6aa86a 24%, transparent);
+    radial-gradient(ellipse 80% 70% at 50% 50%, color-mix(in srgb, #6aa86a 7%, transparent), transparent 80%);
 }
 
-.section-skin--veg .section-skin__corner--tr {
-  top: -20px;
-  right: -20px;
-  background-image: url("/textures/lotus.svg");
-  opacity: 0.16;
-  width: clamp(140px, 26%, 240px);
-}
-
-.section-skin--veg .section-skin__corner--bl {
-  bottom: -20px;
-  left: -20px;
-  background-image: url("/textures/lotus.svg");
-  opacity: 0.13;
-  transform: rotate(45deg);
-  width: clamp(120px, 22%, 200px);
-}
-
-/* ----- Chef skin (ornate dark parchment + gold filigree corners) ----- */
-.section-skin--chef {
-  --color-line: rgba(215, 168, 75, 0.22);
-  --line: rgba(215, 168, 75, 0.22);
+/* ----- Chef skin (warm parchment + subtle pinstripe) ----- */
+.section-skin--chef .section-skin__bg {
   background:
-    radial-gradient(ellipse at 28% 18%, rgba(215, 168, 75, 0.20), transparent 55%),
-    radial-gradient(ellipse at 72% 82%, rgba(126, 33, 31, 0.30), transparent 60%),
-    linear-gradient(180deg, #221710 0%, #1a110a 60%, #15100a 100%);
-  border: 1px solid color-mix(in srgb, var(--gold) 38%, transparent);
-  color: var(--cream);
-  box-shadow:
-    0 0 0 1px rgba(215, 168, 75, 0.10) inset,
-    0 28px 64px -24px rgba(0, 0, 0, 0.55);
-}
-
-.section-skin--chef .menu-leader__dots {
-  border-bottom-color: color-mix(in srgb, var(--gold-light) 38%, transparent);
-}
-
-.section-skin--chef::before {
-  content: "";
-  position: absolute;
-  inset: 16px;
-  border: 1px solid color-mix(in srgb, var(--gold) 32%, transparent);
-  border-radius: calc(1.5rem - 16px);
-  background:
-    repeating-linear-gradient(0deg, rgba(248, 236, 215, 0.018) 0 1px, transparent 1px 3px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.section-skin--chef .section-skin__corner {
-  opacity: 0.4;
-}
-
-.section-skin--chef .section-skin__corner--tl {
-  top: 0;
-  left: 0;
-  background-image: url("/textures/filigree-corner.svg");
-}
-
-.section-skin--chef .section-skin__corner--tr {
-  top: 0;
-  right: 0;
-  background-image: url("/textures/filigree-corner.svg");
-  transform: scaleX(-1);
-}
-
-.section-skin--chef .section-skin__corner--bl {
-  bottom: 0;
-  left: 0;
-  background-image: url("/textures/filigree-corner.svg");
-  transform: scaleY(-1);
-}
-
-.section-skin--chef .section-skin__corner--br {
-  bottom: 0;
-  right: 0;
-  background-image: url("/textures/filigree-corner.svg");
-  transform: scale(-1, -1);
-}
-
-/* Dark theme adjustments */
-[data-theme="dark"] .section-skin--default,
-[data-theme="dark"] .section-skin--tandoori,
-[data-theme="dark"] .section-skin--biryani,
-[data-theme="dark"] .section-skin--special,
-[data-theme="dark"] .section-skin--veg {
-  border-color: color-mix(in srgb, var(--gold) 22%, transparent);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .section-skin--default,
-  :root:not([data-theme="light"]) .section-skin--tandoori,
-  :root:not([data-theme="light"]) .section-skin--biryani,
-  :root:not([data-theme="light"]) .section-skin--special,
-  :root:not([data-theme="light"]) .section-skin--veg {
-    border-color: color-mix(in srgb, var(--gold) 22%, transparent);
-  }
+    radial-gradient(ellipse 70% 60% at 50% 50%, color-mix(in srgb, var(--gold) 12%, transparent), transparent 75%),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--maroon) 6%, transparent), transparent 65%),
+    repeating-linear-gradient(0deg, rgba(120, 80, 30, 0.05) 0 1px, transparent 1px 5px);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .section-skin--tandoori::after {
     animation: none;
   }
+}
+
+/* Creative banner — image dissolves into section, no hard edges */
+.menu-banner {
+  position: relative;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 60%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 0%, #000 60%, transparent 100%);
 }
 
 .parchment-dark {
@@ -1125,5 +1074,51 @@ main section[id] {
   }
   .lowhp-mark:hover .lowhp-mark__arrow {
     transform: none;
+  }
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }

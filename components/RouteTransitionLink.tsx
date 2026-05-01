@@ -3,7 +3,7 @@
 import Link, { type LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
-import { locales } from "@/lib/i18n";
+import { locales } from "@/lib/locales";
 
 type Props = LinkProps &
   Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & {

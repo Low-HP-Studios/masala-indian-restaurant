@@ -16,21 +16,12 @@ type Props = {
 
 export default function DishRow({ item, variant = "default", labels }: Props) {
   const isProteinBased = typeof item.price === "object";
-  const isChef = variant === "chef";
 
-  const nameClass = `font-heading text-lg sm:text-xl font-semibold leading-tight ${
-    isChef ? "text-cream chef-dot" : "text-ink"
-  }`;
-  const priceClass = `font-heading text-lg sm:text-xl font-semibold whitespace-nowrap ${
-    isChef ? "text-gold-light" : "text-saffron-dark"
-  }`;
-  const descClass = `font-body text-sm leading-snug italic ${
-    isChef ? "text-cream/70" : "text-ink-muted"
-  }`;
-  const noteClass = `font-body text-xs ${isChef ? "text-cream/55" : "text-ink-muted/70"}`;
-  const proteinRowClass = `flex items-baseline gap-2 ${
-    isChef ? "text-cream/85" : "text-ink/85"
-  }`;
+  const nameClass = "font-heading text-lg sm:text-xl font-semibold leading-tight text-ink";
+  const priceClass = "font-heading text-lg sm:text-xl font-semibold whitespace-nowrap text-saffron-dark";
+  const descClass = "font-body text-sm leading-snug italic text-ink-muted";
+  const noteClass = "font-body text-xs text-ink-muted/70";
+  const proteinRowClass = "flex items-baseline gap-2 text-ink/85";
 
   return (
     <article className="py-4 first:pt-0 last:pb-0">
@@ -56,7 +47,7 @@ export default function DishRow({ item, variant = "default", labels }: Props) {
               {item.spiceLevel !== undefined && item.spiceLevel > 0 && (
                 <SpiceIndicator level={item.spiceLevel} labels={labels.spice} />
               )}
-              {item.isChefSpecial && !isChef && (
+              {item.isChefSpecial && variant !== "chef" && (
                 <span className="text-[0.65rem] font-semibold font-body uppercase tracking-wider text-saffron-dark bg-saffron/10 border border-saffron/30 px-1.5 py-0.5">
                   {labels.chefSpecial}
                 </span>
@@ -84,9 +75,7 @@ export default function DishRow({ item, variant = "default", labels }: Props) {
                     {labels.proteins[protein] ?? protein}
                   </span>
                   <span className="flex-1 border-b border-dotted border-line/80 translate-y-[-0.25rem]" />
-                  <span className={`text-sm font-heading font-semibold ${
-                    isChef ? "text-gold-light" : "text-saffron-dark"
-                  }`}>
+                  <span className="text-sm font-heading font-semibold text-saffron-dark">
                     €{(price as number).toFixed(2)}
                   </span>
                 </div>

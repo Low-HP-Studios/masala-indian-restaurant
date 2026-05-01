@@ -3,14 +3,19 @@ import type { CSSProperties } from "react";
 import MotionPressable from "./MotionPressable";
 import RevealOnScroll from "./RevealOnScroll";
 import RouteTransitionLink from "./RouteTransitionLink";
-import { localizePath, type Locale, type SiteDictionary } from "@/lib/i18n";
+import type { SiteDictionary } from "@/lib/i18n";
+import { localizePath, type Locale } from "@/lib/locales";
 
 type Props = {
   locale: Locale;
   copy: SiteDictionary["story"];
+  image: {
+    src: string;
+    alt: string;
+  };
 };
 
-export default function Story({ locale, copy }: Props) {
+export default function Story({ locale, copy, image }: Props) {
   return (
     <section id="about" className="bg-page py-24 lg:py-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -59,8 +64,8 @@ export default function Story({ locale, copy }: Props) {
             {/* Main image */}
             <div className="relative aspect-[4/5] rounded-sm overflow-hidden shadow-2xl">
               <Image
-                src="/images/visits/10.jpg"
-                alt="Masala Indian Restaurant interior"
+                src={image.src}
+                alt={image.alt}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

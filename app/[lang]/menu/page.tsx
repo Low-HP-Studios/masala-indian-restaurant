@@ -1,44 +1,155 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { notFound } from "next/navigation";
+import { fetchQuery } from "convex/nextjs";
+import { api } from "@/convex/_generated/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MenuClient from "@/components/menu/MenuClient";
-import { getDictionary, getLocalizedMenuCategories, isLocale, type Locale } from "@/lib/i18n";
+import type { SiteDictionary } from "@/lib/i18n";
+import { isLocale, type Locale } from "@/lib/locales";
+import type { MenuCategory, ProteinPrices, SpiceLevel } from "@/data/menu";
 
 type Params = Promise<{ lang: string }>;
 
 function getLocale(lang: string): Locale {
-  return isLocale(lang) ? lang : "en";
+  if (!isLocale(lang)) notFound();
+  return lang;
+}
+
+function requireContent<T>(data: T | null | undefined, label: string): T {
+  if (!data) {
+    throw new Error(`CMS content missing: ${label}`);
+  }
+  return data;
+}
+
+function mapNav(data: NonNullable<Awaited<ReturnType<typeof fetchQuery<typeof api.content.getNavbar>>>>): SiteDictionary["nav"] {
+  const linkMap = Object.fromEntries(data.links.map((l) => [l.key, l.label]));
+  const link = (key: string) => requireContent(linkMap[key], `navbar.links.${key}`);
+  return {
+    home: link("home"),
+    menu: link("menu"),
+    about: requireContent(data.about, "navbar.about"),
+    contact: link("contact"),
+    story: link("story"),
+    signature: link("signature"),
+    preview: link("preview"),
+    menuLink: link("menu"),
+    reserve: data.reserve,
+    toggle: data.toggle,
+    language: data.language,
+  };
+}
+
+function getMenuItemPrice(item: {
+  slug: string;
+  priceFixed?: number;
+  priceByProtein?: ProteinPrices;
+}): number | ProteinPrices {
+  if (item.priceFixed !== undefined && item.priceFixed !== null) return item.priceFixed;
+  if (item.priceByProtein) return item.priceByProtein;
+  throw new Error(`CMS content missing: menuItems.${item.slug}.price`);
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { lang } = await params;
-  const dict = getDictionary(getLocale(lang));
+  const locale = getLocale(lang);
+  const data = requireContent(await fetchQuery(api.content.getMeta, { locale }), "meta");
 
   return {
-    title: dict.meta.menuTitle,
-    description: dict.meta.menuDescription,
+    title: data.menuTitle,
+    description: data.menuDescription,
   };
 }
 
 export default async function MenuPage({ params }: { params: Params }) {
   const { lang } = await params;
   const locale = getLocale(lang);
-  const dict = getDictionary(locale);
-  const categories = getLocalizedMenuCategories(locale);
+
+  const [navbar, menuPage, footer, convexCategories] = await Promise.all([
+    fetchQuery(api.content.getNavbar, { locale }),
+    fetchQuery(api.content.getMenuPage, { locale }),
+    fetchQuery(api.content.getFooter, { locale }),
+    fetchQuery(api.menu.getCategories, { locale }),
+  ]);
+
+  const navbarData = requireContent(navbar, "navbar");
+  const menuPageData = requireContent(menuPage, "menuPage");
+  const footerData = requireContent(footer, "footer");
+  const menuHeroImage = requireContent(menuPageData.heroImage, "menuPage.heroImage");
+  const rawCategories = requireContent(convexCategories, "menu.categories");
+  if (rawCategories.length === 0) {
+    throw new Error("CMS content missing: menu.categories");
+  }
+
+  const nav = mapNav(navbarData);
+  const brand = { name: navbarData.brandName, descriptor: navbarData.brandDescriptor };
+
+  const categories: MenuCategory[] = rawCategories.map((cat) => ({
+    id: cat.slug,
+    label: requireContent(cat.label || null, `menuCategories.${cat.slug}.label`),
+    description: cat.description,
+    bannerImage: cat.bannerImage,
+    variant: cat.variant as MenuCategory["variant"],
+    items: cat.items.map((item) => ({
+      id: item.slug,
+      name: requireContent(item.name || null, `menuItems.${item.slug}.name`),
+      description: item.description,
+      price: getMenuItemPrice(item),
+      spiceLevel: item.spiceLevel,
+      isVegetarian: item.isVegetarian,
+      isChefSpecial: item.isChefSpecial,
+      image: item.image,
+      note: item.note,
+    })),
+  }));
+
+  if (menuPageData.spiceLevels.length < 5) {
+    throw new Error("CMS content missing: menuPage.spiceLevels");
+  }
+
+  const menuCopy: SiteDictionary["menuPage"] = {
+    eyebrow: menuPageData.eyebrow,
+    title: menuPageData.title,
+    accent: menuPageData.accent,
+    vegetarian: menuPageData.vegetarian,
+    spiceIndicator: menuPageData.spiceIndicator,
+    priceNote: menuPageData.priceNote,
+    chefSpecial: menuPageData.chefSpecial,
+    proteins: menuPageData.proteins,
+    spice: Object.fromEntries(
+      menuPageData.spiceLevels.map((label, index) => [index, label])
+    ) as Record<SpiceLevel, string>,
+  };
+
+  const footerCopy: SiteDictionary["footer"] = {
+    summary: footerData.summary,
+    navigation: footerData.navigation,
+    menu: footerData.menu,
+    visit: footerData.visit,
+    address: footerData.address,
+    phone: footerData.phone,
+    email: footerData.email,
+    hours: footerData.hours,
+    rights: footerData.rights,
+    crafted: footerData.crafted,
+    designedBy: requireContent(footerData.designedBy, "footer.designedBy"),
+    links: footerData.links,
+  };
 
   return (
     <>
-      <Navbar locale={locale} copy={dict.nav} brand={dict.brand} />
+      <Navbar locale={locale} copy={nav} brand={brand} />
 
       <section className="relative flex h-[36vh] min-h-[320px] items-end justify-center overflow-hidden bg-dark pt-20">
         <Image
-          src="/images/hero-banner/tandoor-skewers.png"
-          alt="Tandoori platter from Masala Indian Restaurant"
+          src={menuHeroImage.src}
+          alt={menuHeroImage.alt}
           fill
           priority
           className="object-cover"
-          style={{ objectPosition: "center 52%" }}
+          style={{ objectPosition: menuHeroImage.position }}
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/45" />
@@ -46,12 +157,12 @@ export default async function MenuPage({ params }: { params: Params }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
         <div className="relative z-10 px-6 pb-10 text-center">
-          <p className="section-label mb-3 text-saffron-light">{dict.menuPage.eyebrow}</p>
+          <p className="section-label mb-3 text-saffron-light">{menuCopy.eyebrow}</p>
           <h1
             className="font-heading text-cream"
             style={{ fontSize: "clamp(2.7rem, 5.5vw, 5rem)", textShadow: "0 8px 34px rgba(0,0,0,0.7)" }}
           >
-            {dict.menuPage.title} <em className="not-italic text-gold">{dict.menuPage.accent}</em>
+            {menuCopy.title} <em className="not-italic text-gold">{menuCopy.accent}</em>
           </h1>
           <span className="mx-auto mt-5 block h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent" />
         </div>
@@ -61,19 +172,19 @@ export default async function MenuPage({ params }: { params: Params }) {
         <MenuClient
           categories={categories}
           labels={{
-            chefSpecial: dict.menuPage.chefSpecial,
-            proteins: dict.menuPage.proteins,
-            spice: dict.menuPage.spice,
+            chefSpecial: menuCopy.chefSpecial,
+            proteins: menuCopy.proteins,
+            spice: menuCopy.spice,
           }}
           legend={{
-            vegetarian: dict.menuPage.vegetarian,
-            spiceIndicator: dict.menuPage.spiceIndicator,
-            priceNote: dict.menuPage.priceNote,
+            vegetarian: menuCopy.vegetarian,
+            spiceIndicator: menuCopy.spiceIndicator,
+            priceNote: menuCopy.priceNote,
           }}
         />
       </main>
 
-      <Footer locale={locale} copy={dict.footer} nav={dict.nav} brand={dict.brand} />
+      <Footer locale={locale} copy={footerCopy} nav={nav} brand={brand} />
     </>
   );
 }

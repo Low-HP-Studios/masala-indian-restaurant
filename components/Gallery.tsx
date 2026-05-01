@@ -3,18 +3,17 @@ import Link from "next/link";
 import RevealOnScroll from "./RevealOnScroll";
 import type { SiteDictionary } from "@/lib/i18n";
 
-const images = [
-  { src: "/images/food/12.jpg",   label: "Signature Curry",   sub: "Our most-loved dish",     featured: true },
-  { src: "/images/visits/10.jpg", label: "Warm Welcomes",     sub: "Every guest, every time" },
-  { src: "/images/food/11.jpg",   label: "Golden Samosas",    sub: "Crisp. Spiced. Perfect." },
-  { src: "/images/food/13.jpg",   label: "Falooda Kulfi",     sub: "A sweet finale" },
-  { src: "/images/visits/15.jpg", label: "Family Feasts",     sub: "Memories made here" },
-  { src: "/images/visits/7.jpg",  label: "Cherished Moments", sub: "Laughter and naan" },
-];
+type Props = {
+  copy: SiteDictionary["gallery"];
+  images: Array<{
+    src: string;
+    label: string;
+    sub: string;
+    featured?: boolean;
+  }>;
+};
 
-type Props = { copy: SiteDictionary["gallery"] };
-
-export default function Gallery({ copy }: Props) {
+export default function Gallery({ copy, images }: Props) {
   return (
     <section id="preview" className="bg-page py-24 lg:py-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -98,7 +97,7 @@ export default function Gallery({ copy }: Props) {
             className="font-heading text-ink-muted italic mx-auto max-w-xl"
             style={{ fontSize: "clamp(1rem, 1.8vw, 1.35rem)" }}
           >
-            "Every table holds a story. Every dish, a memory."
+            &quot;Every table holds a story. Every dish, a memory.&quot;
           </blockquote>
           <div className="mt-8">
             <Link href="/en/menu" className="masala-btn masala-btn-filled px-8 py-3">

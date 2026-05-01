@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
-import { Marcellus } from "next/font/google";
 import ConsoleBrand from "@/components/ConsoleBrand";
 import EntryTransition from "@/components/EntryTransition";
 import MotionProvider from "@/components/MotionProvider";
 import "./globals.css";
-
-const marcellus = Marcellus({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-marcellus",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Masala Indian Restaurant | Authentic Indian Cuisine",
@@ -28,7 +20,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={marcellus.variable} data-scroll-behavior="smooth">
+    <html lang="en" className="font-sans" data-scroll-behavior="smooth">
       <head>
         <script dangerouslySetInnerHTML={{__html:`(function(){try{if(!sessionStorage.getItem('masala-entry-transition-complete')){var s=document.createElement('style');s.id='entry-block';s.textContent='body{visibility:hidden}';document.head.appendChild(s);}}catch(e){}})();`}} />
         <noscript><style>{`body{visibility:visible!important}`}</style></noscript>
@@ -40,10 +32,6 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:ital,opsz,wdth,wght,GRAD@0,8,100,400..1000,0&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body className="bg-page text-ink font-body antialiased">
         <div

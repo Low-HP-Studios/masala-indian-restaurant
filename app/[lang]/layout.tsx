@@ -1,6 +1,6 @@
 import { ViewTransition } from "react";
 import { notFound } from "next/navigation";
-import { isLocale, locales } from "@/lib/i18n";
+import { isLocale, locales } from "@/lib/locales";
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));

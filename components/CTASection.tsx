@@ -3,17 +3,25 @@ import MotionPressable from "./MotionPressable";
 import RevealOnScroll from "./RevealOnScroll";
 import type { SiteDictionary } from "@/lib/i18n";
 
-type Props = { copy: SiteDictionary["cta"] };
+type Props = {
+  copy: SiteDictionary["cta"];
+  backgroundImage: {
+    src: string;
+    alt: string;
+    position?: string;
+  };
+};
 
-export default function CTASection({ copy }: Props) {
+export default function CTASection({ copy, backgroundImage }: Props) {
   return (
     <section id="contact" className="relative py-28 lg:py-36 overflow-hidden">
       {/* Background */}
       <Image
-        src="/images/food/4.jpeg"
-        alt="Indian cuisine spread"
+        src={backgroundImage.src}
+        alt={backgroundImage.alt}
         fill
-        className="object-cover object-center"
+        className="object-cover"
+        style={{ objectPosition: backgroundImage.position ?? "center" }}
         sizes="100vw"
       />
       <div className="absolute inset-0 bg-maroon/85" />

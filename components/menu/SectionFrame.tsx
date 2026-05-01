@@ -33,18 +33,13 @@ export default function SectionFrame({
   sectionRef,
 }: Props) {
   const skinKey: SkinKey = id === "vegetarian" ? "veg" : variant;
-  const isChef = skinKey === "chef";
   const isSpecial = skinKey === "special";
   const isTandoori = skinKey === "tandoori";
   const isBiryani = skinKey === "biryani";
 
-  const titleColor = isChef
-    ? "text-cream"
-    : isTandoori
-      ? "text-maroon"
-      : "text-ink";
-  const descColor = isChef ? "text-cream/75" : "text-ink-muted";
-  const eyebrowColor = isChef ? "text-gold-light" : "text-saffron";
+  const titleColor = isTandoori ? "text-maroon" : "text-ink";
+  const descColor = "text-ink-muted";
+  const eyebrowColor = "text-saffron";
 
   return (
     <section
@@ -53,30 +48,10 @@ export default function SectionFrame({
       className="relative py-2"
     >
       <div className={SKIN_CLASS[skinKey]}>
-        {(skinKey === "default" || skinKey === "veg" || skinKey === "chef") && (
-          <>
-            <span
-              className="section-skin__corner section-skin__corner--tl"
-              aria-hidden="true"
-            />
-            <span
-              className="section-skin__corner section-skin__corner--tr"
-              aria-hidden="true"
-            />
-            <span
-              className="section-skin__corner section-skin__corner--bl"
-              aria-hidden="true"
-            />
-            <span
-              className="section-skin__corner section-skin__corner--br"
-              aria-hidden="true"
-            />
-          </>
-        )}
-
+        <div className="section-skin__bg" aria-hidden="true" />
         {bannerImage && (
           <div
-            className={`relative overflow-hidden mb-6 rounded-lg ${
+            className={`menu-banner mb-2 ${
               isSpecial ? "aspect-[21/8]" : "aspect-[21/9]"
             }`}
           >
@@ -111,7 +86,7 @@ export default function SectionFrame({
           />
         </div>
 
-        <div className={isChef ? "text-cream" : ""}>{children}</div>
+        <div>{children}</div>
       </div>
     </section>
   );

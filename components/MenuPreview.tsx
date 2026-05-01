@@ -3,7 +3,8 @@ import MotionLift from "./MotionLift";
 import MotionPressable from "./MotionPressable";
 import RevealOnScroll from "./RevealOnScroll";
 import RouteTransitionLink from "./RouteTransitionLink";
-import { localizePath, type Locale, type SiteDictionary } from "@/lib/i18n";
+import type { SiteDictionary } from "@/lib/i18n";
+import { localizePath, type Locale } from "@/lib/locales";
 
 type Props = {
   locale: Locale;

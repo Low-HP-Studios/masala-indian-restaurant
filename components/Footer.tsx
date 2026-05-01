@@ -1,6 +1,7 @@
 import RouteTransitionLink from "./RouteTransitionLink";
 import LowhpMark from "./LowhpMark";
-import { localizePath, type Locale, type SiteDictionary } from "@/lib/i18n";
+import type { SiteDictionary } from "@/lib/i18n";
+import { localizePath, type Locale } from "@/lib/locales";
 
 type Props = {
   locale: Locale;

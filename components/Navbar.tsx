@@ -11,8 +11,8 @@ import {
   localizePath,
   switchLocalePath,
   type Locale,
-  type SiteDictionary,
-} from "@/lib/i18n";
+} from "@/lib/locales";
+import type { SiteDictionary } from "@/lib/i18n";
 
 type ThemeChoice = "system" | "light" | "dark";
 
