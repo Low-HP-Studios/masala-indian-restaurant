@@ -15,7 +15,28 @@ export function SkeletonImage({
   skeletonClassName,
   onLoad,
   alt,
-  fill: _fill,
+  fill,
+  ...rest
+}: SkeletonImageProps) {
+  return (
+    <SkeletonImageInner
+      key={String(rest.src)}
+      className={className}
+      skeletonClassName={skeletonClassName}
+      onLoad={onLoad}
+      alt={alt}
+      fill={fill}
+      {...rest}
+    />
+  );
+}
+
+function SkeletonImageInner({
+  className,
+  skeletonClassName,
+  onLoad,
+  alt,
+  fill,
   ...rest
 }: SkeletonImageProps) {
   const [loaded, setLoaded] = useState(false);
@@ -39,7 +60,7 @@ export function SkeletonImage({
       )}
       <Image
         alt={alt}
-        fill
+        fill={fill}
         className={cn(
           className,
           "transition-opacity duration-500",
