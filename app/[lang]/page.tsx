@@ -10,6 +10,7 @@ import FeaturedDishes from "@/components/FeaturedDishes";
 import MenuPreview from "@/components/MenuPreview";
 import Gallery from "@/components/Gallery";
 import ValuesSection from "@/components/ValuesSection";
+import ReviewsSection from "@/components/ReviewsSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import type { SiteDictionary } from "@/lib/i18n";
@@ -208,6 +209,7 @@ export default async function Home({ params }: { params: Params }) {
         <MenuPreview locale={locale} copy={menuPreviewCopy} />
         <Gallery copy={galleryCopy} images={galleryImages} />
         <ValuesSection copy={valuesCopy} />
+        <ReviewsSection locale={locale} />
         <CTASection copy={ctaCopy} backgroundImage={ctaBackgroundImage} />
       </main>
       <Footer locale={locale} copy={footerCopy} nav={nav} brand={brand} />

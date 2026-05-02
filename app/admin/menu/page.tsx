@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { type Id } from "@/convex/_generated/dataModel";
@@ -796,7 +796,7 @@ function CategoryDetailLoaded({
 
         {catData.items.map((item: any) => (
           <MenuItemEditor
-            key={`${item._id}-${locale}`}
+            key={`${item._id}-${locale}-${item.imageId ?? item.image ?? "no-image"}`}
             item={item}
             categoryId={categoryId}
             locale={locale}
@@ -813,6 +813,10 @@ export default function MenuAdminPage() {
     null,
   );
   const categories = useQuery(api.menu.getAllCategoriesAdmin);
+  const selectedCategory = useMemo(
+    () => categories?.find((cat: any) => cat._id === selectedId),
+    [categories, selectedId],
+  );
 
   return (
     <>
@@ -854,12 +858,14 @@ export default function MenuAdminPage() {
                   />
                 ))}
               </div>
-              <div className="no-scrollbar hidden min-h-0 flex-col gap-4 overflow-y-auto overscroll-contain xl:flex">
-                <Skeleton className="h-12 w-full max-w-xl rounded-lg bg-zinc-800/80" />
-                <Skeleton className="h-56 w-full max-w-md rounded-lg bg-zinc-800/70" />
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <Skeleton className="h-40 rounded-lg bg-zinc-800/60" />
-                  <Skeleton className="h-40 rounded-lg bg-zinc-800/60" />
+              <div className="no-scrollbar hidden min-h-0 flex-col gap-6 overflow-y-auto overscroll-contain xl:flex">
+                <Skeleton className="h-[196px] w-full rounded-lg bg-zinc-800/80" />
+                <Skeleton className="h-[210px] w-full rounded-lg bg-zinc-800/70" />
+                <div className="space-y-3">
+                  <Skeleton className="h-8 w-32 rounded-md bg-zinc-800/80" />
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <Skeleton key={i} className="h-[285px] w-full rounded-lg bg-zinc-800/70" />
+                  ))}
                 </div>
               </div>
             </div>
@@ -879,6 +885,12 @@ export default function MenuAdminPage() {
                       />
                     ))}
                   </div>
+                </div>
+              )}
+
+              {!selectedId && categories.length > 0 && (
+                <div className="sr-only" aria-live="polite">
+                  Select a category to edit.
                 </div>
               )}
 
@@ -902,11 +914,18 @@ export default function MenuAdminPage() {
                 <div className="no-scrollbar min-h-0 min-w-0 xl:overflow-y-auto xl:overscroll-contain">
                   {selectedId
                     ? (
-                      <CategoryDetail
-                        key={`${selectedId}-${locale}`}
-                        categoryId={selectedId}
-                        locale={locale}
-                      />
+                      selectedCategory ? (
+                        <CategoryDetail
+                          key={`${selectedId}-${locale}-${selectedCategory.bannerImageId ?? selectedCategory.bannerImage ?? "no-banner"}`}
+                          categoryId={selectedId}
+                          locale={locale}
+                        />
+                      ) : (
+                        <div className="space-y-6">
+                          <Skeleton className="h-[196px] w-full rounded-lg bg-zinc-800/80" />
+                          <Skeleton className="h-[210px] w-full rounded-lg bg-zinc-800/70" />
+                        </div>
+                      )
                     )
                     : (
                       <div className="flex items-center justify-center h-40 text-zinc-500 text-sm">

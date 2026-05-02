@@ -1,13 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
-  Authenticated,
-  AuthLoading,
   ConvexReactClient,
-  Unauthenticated,
+  useConvexAuth,
   useQuery,
 } from "convex/react";
 import { ConvexAuthNextjsProvider } from "@convex-dev/auth/nextjs";
@@ -20,7 +18,94 @@ import { LogOut, Menu, X } from "lucide-react";
 
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
-function AdminAuthLoadingSkeleton() {
+function DashboardLoadingSkeleton() {
+  return (
+    <div className="h-full overflow-y-auto p-4 sm:p-6 lg:p-8">
+      <div className="mb-6 sm:mb-8">
+        <Skeleton className="h-8 w-28 rounded-md bg-zinc-800" />
+        <Skeleton className="mt-2 h-4 w-full max-w-md rounded-md bg-zinc-800/70" />
+      </div>
+      <div className="mb-8 sm:mb-10">
+        <Skeleton className="mb-4 h-3 w-28 rounded bg-zinc-800/80" />
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 11 }).map((_, i) => (
+            <Skeleton key={i} className="h-[78px] rounded-lg bg-zinc-800/90" />
+          ))}
+        </div>
+      </div>
+      <Skeleton className="mb-4 h-3 w-16 rounded bg-zinc-800/80" />
+      <Skeleton className="h-[78px] w-full rounded-lg bg-zinc-800/90 sm:max-w-xs" />
+    </div>
+  );
+}
+
+function SectionLoadingSkeleton() {
+  return (
+    <div className="flex h-full min-h-0 flex-col overflow-hidden">
+      <header className="shrink-0 border-b border-zinc-800 px-4 py-4 sm:px-6 lg:px-8 lg:pt-8 lg:pb-5">
+        <Skeleton className="mb-2 h-3 w-20 rounded bg-zinc-800" />
+        <Skeleton className="h-7 w-44 rounded-md bg-zinc-800" />
+        <Skeleton className="mt-2 h-4 w-full max-w-md rounded-md bg-zinc-800/70" />
+        <Skeleton className="mt-4 h-10 w-full max-w-lg rounded-lg bg-zinc-800/90" />
+      </header>
+      <div className="flex min-h-0 flex-1 flex-col xl:flex-row">
+        <main className="no-scrollbar min-h-0 flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+          <div className="max-w-2xl space-y-4">
+            <Skeleton className="h-20 w-full rounded-md bg-zinc-800" />
+            <Skeleton className="h-20 w-full rounded-md bg-zinc-800" />
+            <Skeleton className="h-28 w-full rounded-md bg-zinc-800/80" />
+            <Skeleton className="h-20 w-full rounded-md bg-zinc-800" />
+          </div>
+        </main>
+        <aside className="no-scrollbar shrink-0 border-t border-zinc-800 bg-zinc-950/80 p-4 xl:flex xl:h-full xl:w-[min(440px,40vw)] xl:flex-col xl:overflow-y-auto xl:border-l xl:border-t-0 xl:p-6">
+          <Skeleton className="h-44 w-full rounded-lg bg-zinc-800/90" />
+          <div className="mt-6 space-y-3">
+            <Skeleton className="h-11 w-full rounded-md bg-zinc-800" />
+            <Skeleton className="h-11 w-full rounded-md bg-zinc-800" />
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
+function MenuLoadingSkeleton() {
+  return (
+    <div className="flex h-full min-h-0 flex-col overflow-hidden">
+      <div className="z-20 shrink-0 border-b border-zinc-800 bg-zinc-900/95 px-4 py-4 sm:px-6 lg:px-8 lg:pt-8 lg:pb-6">
+        <Skeleton className="mb-2 h-3 w-16 rounded bg-zinc-800" />
+        <Skeleton className="h-7 w-52 rounded-md bg-zinc-800" />
+        <Skeleton className="mt-4 h-10 w-full max-w-lg rounded-lg bg-zinc-800/90" />
+      </div>
+      <div className="no-scrollbar grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto p-4 sm:gap-6 sm:p-6 lg:p-8 xl:grid-cols-[280px_minmax(0,1fr)] xl:overflow-hidden">
+        <div className="no-scrollbar min-h-0 space-y-2 overflow-y-auto overscroll-contain pr-1">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <Skeleton key={i} className="h-[62px] w-full rounded-lg bg-zinc-800/95" />
+          ))}
+        </div>
+        <div className="no-scrollbar hidden min-h-0 flex-col gap-6 overflow-y-auto overscroll-contain xl:flex">
+          <Skeleton className="h-[196px] w-full rounded-lg bg-zinc-800/80" />
+          <Skeleton className="h-[210px] w-full rounded-lg bg-zinc-800/70" />
+          <div className="space-y-3">
+            <Skeleton className="h-8 w-32 rounded-md bg-zinc-800/80" />
+            {Array.from({ length: 2 }).map((_, i) => (
+              <Skeleton key={i} className="h-[285px] w-full rounded-lg bg-zinc-800/70" />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AdminRouteLoadingSkeleton({ path }: { path: string }) {
+  if (path === "/admin") return <DashboardLoadingSkeleton />;
+  if (path.startsWith("/admin/menu")) return <MenuLoadingSkeleton />;
+  if (path.startsWith("/admin/sections/")) return <SectionLoadingSkeleton />;
+  return <DashboardLoadingSkeleton />;
+}
+
+function AdminAuthLoadingSkeleton({ path }: { path: string }) {
   return (
     <div className="dark fixed inset-0 z-50 flex overflow-hidden bg-zinc-900 text-white">
       <div className="fixed inset-y-0 left-0 z-40 hidden lg:block">
@@ -44,17 +129,7 @@ function AdminAuthLoadingSkeleton() {
       </header>
 
       <main className="h-full min-w-0 flex-1 overflow-hidden pt-14 lg:ml-64 lg:pt-0">
-        <div className="h-full space-y-4 overflow-y-auto p-4 sm:p-6 lg:p-8">
-          <Skeleton className="h-7 w-48 rounded-md bg-zinc-800 sm:h-8 sm:w-56" />
-          <Skeleton className="h-4 w-full max-w-md rounded-md bg-zinc-800/70" />
-          <Skeleton className="h-4 w-52 rounded-md bg-zinc-800/50" />
-          <div className="grid gap-3 pt-4 sm:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <Skeleton key={i} className="h-28 rounded-lg bg-zinc-800/90" />
-            ))}
-          </div>
-          <Skeleton className="mx-auto mt-8 h-40 w-full max-w-2xl rounded-lg bg-zinc-800/60" />
-        </div>
+        <AdminRouteLoadingSkeleton path={path} />
       </main>
     </div>
   );
@@ -203,7 +278,17 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
+  return (
+    <ConvexAuthNextjsProvider client={convex}>
+      <AdminShellContent>{children}</AdminShellContent>
+    </ConvexAuthNextjsProvider>
+  );
+}
+
+function AdminShellContent({ children }: { children: React.ReactNode }) {
   const path = usePathname();
+  const router = useRouter();
+  const { isLoading, isAuthenticated } = useConvexAuth();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const isLoginRoute = path === "/admin/login";
   const isForgotPasswordRoute = path === "/admin/forgot-password";
@@ -220,78 +305,74 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
     };
   }, []);
 
+  useEffect(() => {
+    if (isPublicAdminRoute || isLoading || isAuthenticated) return;
+    const params = new URLSearchParams({ next: path });
+    router.replace(`/admin/login?${params.toString()}`);
+  }, [isAuthenticated, isLoading, isPublicAdminRoute, path, router]);
+
   return (
-    <ConvexAuthNextjsProvider client={convex}>
+    <>
       {isPublicAdminRoute ? (
         <div className="dark min-h-screen">{children}</div>
+      ) : isLoading || !isAuthenticated ? (
+        <AdminAuthLoadingSkeleton path={path} />
       ) : (
-        <>
-          <AuthLoading>
-            <AdminAuthLoadingSkeleton />
-          </AuthLoading>
-          <Unauthenticated>
-            <div className="dark grid min-h-screen place-items-center bg-zinc-950 text-sm text-zinc-400">
-              Redirecting to sign in...
-            </div>
-          </Unauthenticated>
-          <Authenticated>
-            <div className="dark fixed inset-0 flex overflow-hidden bg-zinc-900 text-white">
-              <div className="fixed inset-y-0 left-0 z-40 hidden lg:block">
-                <Sidebar />
-              </div>
+        <div className="dark fixed inset-0 flex overflow-hidden bg-zinc-900 text-white">
+          <div className="fixed inset-y-0 left-0 z-40 hidden lg:block">
+            <Sidebar />
+          </div>
 
-              <header className="fixed inset-x-0 top-0 z-40 flex h-14 items-center gap-3 border-b border-zinc-800 bg-zinc-950/95 px-4 backdrop-blur lg:hidden">
+          <header className="fixed inset-x-0 top-0 z-40 flex h-14 items-center gap-3 border-b border-zinc-800 bg-zinc-950/95 px-4 backdrop-blur lg:hidden">
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label="Open admin navigation"
+              onClick={() => setMobileNavOpen(true)}
+              className="-ml-2 text-zinc-200 hover:bg-zinc-800 hover:text-white"
+            >
+              <Menu className="size-5" />
+            </Button>
+            <div className="min-w-0">
+              <p className="text-[10px] uppercase tracking-widest text-zinc-500">
+                Masala CMS
+              </p>
+              <p className="truncate text-sm font-semibold text-white">
+                Admin
+              </p>
+            </div>
+          </header>
+
+          {mobileNavOpen && (
+            <div className="fixed inset-0 z-50 lg:hidden">
+              <button
+                type="button"
+                aria-label="Close admin navigation"
+                className="absolute inset-0 bg-black/60"
+                onClick={() => setMobileNavOpen(false)}
+              />
+              <div className="absolute inset-y-0 left-0 w-64 max-w-[85vw] shadow-2xl">
+                <Sidebar onNavigate={() => setMobileNavOpen(false)} />
                 <Button
                   type="button"
                   variant="ghost"
-                  size="icon"
-                  aria-label="Open admin navigation"
-                  onClick={() => setMobileNavOpen(true)}
-                  className="-ml-2 text-zinc-200 hover:bg-zinc-800 hover:text-white"
+                  size="icon-sm"
+                  aria-label="Close admin navigation"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="absolute right-3 top-3 text-zinc-300 hover:bg-zinc-800 hover:text-white"
                 >
-                  <Menu className="size-5" />
+                  <X className="size-4" />
                 </Button>
-                <div className="min-w-0">
-                  <p className="text-[10px] uppercase tracking-widest text-zinc-500">
-                    Masala CMS
-                  </p>
-                  <p className="truncate text-sm font-semibold text-white">
-                    Admin
-                  </p>
-                </div>
-              </header>
-
-              {mobileNavOpen && (
-                <div className="fixed inset-0 z-50 lg:hidden">
-                  <button
-                    type="button"
-                    aria-label="Close admin navigation"
-                    className="absolute inset-0 bg-black/60"
-                    onClick={() => setMobileNavOpen(false)}
-                  />
-                  <div className="absolute inset-y-0 left-0 w-64 max-w-[85vw] shadow-2xl">
-                    <Sidebar onNavigate={() => setMobileNavOpen(false)} />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon-sm"
-                      aria-label="Close admin navigation"
-                      onClick={() => setMobileNavOpen(false)}
-                      className="absolute right-3 top-3 text-zinc-300 hover:bg-zinc-800 hover:text-white"
-                    >
-                      <X className="size-4" />
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              <main className="h-full min-w-0 flex-1 overflow-hidden pt-14 lg:ml-64 lg:pt-0">
-                {children}
-              </main>
+              </div>
             </div>
-          </Authenticated>
-        </>
+          )}
+
+          <main className="h-full min-w-0 flex-1 overflow-hidden pt-14 lg:ml-64 lg:pt-0">
+            {children}
+          </main>
+        </div>
       )}
-    </ConvexAuthNextjsProvider>
+    </>
   );
 }

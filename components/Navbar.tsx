@@ -27,12 +27,20 @@ const navItems = [
   { href: "#about", key: "story", section: "about" },
   { href: "#signature-dishes", key: "signature", section: "signature-dishes" },
   { href: "#preview", key: "preview", section: "preview" },
+  { href: "#reviews", key: "reviews", section: "reviews" },
   { href: "#contact", key: "contact", section: "contact" },
 ] as const;
 
 const menuLink = { href: "/menu", key: "menuLink", section: "menu" } as const;
-const observedSections = ["home", "about", "signature-dishes", "preview", "contact"] as const;
+const observedSections = ["home", "about", "signature-dishes", "preview", "reviews", "contact"] as const;
 const themeStoreEvent = "masala-theme-change";
+const reviewLabels: Record<Locale, string> = {
+  en: "Reviews",
+  nl: "Reviews",
+  es: "Resenas",
+  fr: "Avis",
+  no: "Anmeldelser",
+};
 
 function getStoredTheme(): ThemeChoice {
   if (typeof window === "undefined") return "system";
@@ -103,6 +111,15 @@ function MenuMark() {
   );
 }
 
+function AdminMark() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3.5 19 7v5c0 4.5-2.8 7.5-7 8.5-4.2-1-7-4-7-8.5V7l7-3.5z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.5 12.2 11.3 14l3.4-4" />
+    </svg>
+  );
+}
+
 export default function Navbar({ locale, copy, brand }: Props) {
   const pathname = usePathname();
   const isMenuRoute = pathname.split("/").filter(Boolean).at(1) === "menu";
@@ -153,7 +170,7 @@ export default function Navbar({ locale, copy, brand }: Props) {
     () =>
       navItems.map((item) => ({
         href: localizePath(locale, item.href),
-        label: copy[item.key],
+        label: item.key === "reviews" ? reviewLabels[locale] : copy[item.key],
         section: item.section,
       })),
     [copy, locale]
@@ -261,6 +278,15 @@ export default function Navbar({ locale, copy, brand }: Props) {
             </div>
 
             <span className="hidden h-7 w-px bg-cream/18 sm:block" aria-hidden="true" />
+
+            <RouteTransitionLink
+              href="/admin"
+              aria-label="Open admin dashboard"
+              className="flex h-11 shrink-0 items-center justify-center gap-2 whitespace-nowrap bg-transparent px-1.5 text-sm font-semibold text-cream/78 transition hover:text-[var(--ambient-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--ambient-accent)]/55 sm:px-2.5"
+            >
+              <AdminMark />
+              <span className="hidden lg:inline">Admin</span>
+            </RouteTransitionLink>
 
             <div className="relative z-[85]">
               <button
@@ -387,6 +413,14 @@ export default function Navbar({ locale, copy, brand }: Props) {
             >
               <MenuMark />
               <span>{fullMenuLink.label}</span>
+            </RouteTransitionLink>
+            <RouteTransitionLink
+              href="/admin"
+              onClick={() => setMobileOpen(false)}
+              className="masala-mobile-nav-link flex items-center gap-3 px-4 py-4 text-base font-bold uppercase text-cream/72 transition hover:text-cream"
+            >
+              <AdminMark />
+              <span>Admin</span>
             </RouteTransitionLink>
           </nav>
 

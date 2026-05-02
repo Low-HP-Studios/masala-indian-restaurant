@@ -510,11 +510,13 @@ export default function SectionPage({
         {allData === undefined ? (
           <div className="flex min-h-0 flex-1 flex-col xl:flex-row">
             <main className="no-scrollbar min-h-0 flex-1 space-y-5 overflow-y-auto p-4 sm:p-6 lg:p-8">
-              <Skeleton className="h-10 w-full max-w-lg rounded-md bg-zinc-800" />
-              <Skeleton className="h-10 w-full rounded-md bg-zinc-800" />
-              <Skeleton className="h-10 w-full max-w-xl rounded-md bg-zinc-800" />
-              <Skeleton className="h-36 w-full rounded-md bg-zinc-800/80" />
-              <Skeleton className="h-32 w-full max-w-lg rounded-md bg-zinc-800/70" />
+              <div className="max-w-2xl space-y-4">
+                <Skeleton className="h-20 w-full rounded-md bg-zinc-800" />
+                <Skeleton className="h-20 w-full rounded-md bg-zinc-800" />
+                <Skeleton className="h-28 w-full rounded-md bg-zinc-800/80" />
+                <Skeleton className="h-20 w-full rounded-md bg-zinc-800" />
+                <Skeleton className="h-20 w-full rounded-md bg-zinc-800/70" />
+              </div>
             </main>
             <aside className="no-scrollbar shrink-0 border-t border-zinc-800 bg-zinc-950/80 p-4 xl:flex xl:h-full xl:w-[min(440px,40vw)] xl:flex-col xl:overflow-y-auto xl:border-l xl:border-t-0 xl:p-6">
               <Skeleton className="h-44 w-full rounded-lg bg-zinc-800/90" />
