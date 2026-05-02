@@ -252,24 +252,24 @@ export default function ReviewsSection({ locale }: Props) {
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <MotionPressable>
+            <div className="flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
+              <MotionPressable className="flex w-full sm:w-auto">
                 <a
-                  href={googleWriteReviewUrl}
+                  href={googleReviewsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="masala-btn masala-btn-outline flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-cream"
+                  className="masala-btn masala-btn-outline flex w-full items-center justify-center gap-2 px-6 py-3 text-center text-sm font-semibold text-cream sm:w-auto"
                 >
                   {sectionCopy.read}
                   <ExternalLink className="h-4 w-4" aria-hidden="true" />
                 </a>
               </MotionPressable>
-              <MotionPressable>
+              <MotionPressable className="flex w-full sm:w-auto">
                 <a
-                  href={googleReviewsUrl}
+                  href={googleWriteReviewUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="masala-btn masala-btn-filled flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-cream"
+                  className="masala-btn masala-btn-filled flex w-full items-center justify-center gap-2 px-6 py-3 text-center text-sm font-semibold text-cream sm:w-auto"
                 >
                   {sectionCopy.write}
                   <ExternalLink className="h-4 w-4" aria-hidden="true" />
