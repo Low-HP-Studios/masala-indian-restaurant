@@ -206,6 +206,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const path = usePathname();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const isLoginRoute = path === "/admin/login";
+  const isForgotPasswordRoute = path === "/admin/forgot-password";
+  const isPublicAdminRoute = isLoginRoute || isForgotPasswordRoute;
 
   useEffect(() => {
     const previousHtmlOverflow = document.documentElement.style.overflow;
@@ -220,7 +222,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   return (
     <ConvexAuthNextjsProvider client={convex}>
-      {isLoginRoute ? (
+      {isPublicAdminRoute ? (
         <div className="dark min-h-screen">{children}</div>
       ) : (
         <>

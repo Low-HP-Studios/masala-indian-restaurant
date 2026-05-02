@@ -10,8 +10,14 @@ const authProxy = convexAuthNextjsMiddleware(
     const { pathname } = request.nextUrl;
     const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
     const isLoginRoute = pathname === "/admin/login";
+    const isForgotPasswordRoute = pathname === "/admin/forgot-password";
+    const isPublicAdminRoute = isLoginRoute || isForgotPasswordRoute;
 
-    if (isAdminRoute && !isLoginRoute && !(await convexAuth.isAuthenticated())) {
+    if (
+      isAdminRoute &&
+      !isPublicAdminRoute &&
+      !(await convexAuth.isAuthenticated())
+    ) {
       const next = `${pathname}${request.nextUrl.search}`;
       return nextjsMiddlewareRedirect(
         request,
@@ -19,7 +25,7 @@ const authProxy = convexAuthNextjsMiddleware(
       );
     }
 
-    if (isLoginRoute && (await convexAuth.isAuthenticated())) {
+    if (isPublicAdminRoute && (await convexAuth.isAuthenticated())) {
       return nextjsMiddlewareRedirect(request, "/admin");
     }
 

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import ConsoleBrand from "@/components/ConsoleBrand";
 import EntryTransition from "@/components/EntryTransition";
 import MotionProvider from "@/components/MotionProvider";
@@ -32,16 +31,15 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
-      <body className="bg-page text-ink font-body antialiased">
-        <Script
+        <script
           id="masala-entry-block-init"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html:
               "(function(){try{if(!sessionStorage.getItem('masala-entry-transition-complete')){var s=document.createElement('style');s.id='entry-block';s.textContent='body{visibility:hidden}';document.head.appendChild(s);}}catch(e){}})();",
           }}
         />
+      </head>
+      <body className="bg-page text-ink font-body antialiased">
         <div
           aria-hidden="true"
           style={{ display: "none" }}

@@ -1,31 +1,30 @@
 "use client";
 
 import Image, { type ImageProps } from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useState, type SyntheticEvent } from "react";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export type SkeletonImageProps = Omit<ImageProps, "onLoadingComplete" | "fill"> & {
+export type SkeletonImageProps = Omit<ImageProps, "fill"> & {
   fill: true;
   skeletonClassName?: string;
-  onLoadingComplete?: (img: HTMLImageElement) => void;
 };
 
 export function SkeletonImage({
   className,
   skeletonClassName,
-  onLoadingComplete,
+  onLoad,
   alt,
   fill: _fill,
   ...rest
 }: SkeletonImageProps) {
   const [loaded, setLoaded] = useState(false);
-  const handleComplete = useCallback(
-    (img: HTMLImageElement) => {
+  const handleLoad = useCallback(
+    (event: SyntheticEvent<HTMLImageElement>) => {
       setLoaded(true);
-      onLoadingComplete?.(img);
+      onLoad?.(event);
     },
-    [onLoadingComplete]
+    [onLoad]
   );
 
   return (
@@ -47,7 +46,7 @@ export function SkeletonImage({
           loaded ? "opacity-100" : "opacity-0"
         )}
         {...rest}
-        onLoadingComplete={handleComplete}
+        onLoad={handleLoad}
       />
     </span>
   );
